@@ -14,14 +14,8 @@
   "license": "${license}",
   "icon": "${mod_id}.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "io.github.timtaran.deote.DisableElytraOutsideTheEnd"
-    ]
-  },
   "mixins": [
-    "${mod_id}.mixins.json",
-    "${mod_id}.fabric.mixins.json"
+    "${mod_id}.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
