@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.timtaran.deote.mixins",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DisableElytraServerMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
