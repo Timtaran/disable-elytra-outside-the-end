@@ -4,7 +4,6 @@
   "package": "io.github.timtaran.deote.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "DisableElytraServerMixin"
   ],
   "server": [],
   "injectors": {
