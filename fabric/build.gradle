@@ -9,6 +9,7 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "org.spongepowered:configurate-hocon:4.1.2"
 }
 
 loom {

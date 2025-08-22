@@ -3,6 +3,14 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+dependencies {
+    implementation "org.spongepowered:configurate-hocon:4.1.2"
+    implementation "org.spongepowered:configurate-core:4.1.2"
+
+    jarJar("org.spongepowered:configurate-hocon:4.1.2")
+    jarJar("org.spongepowered:configurate-core:4.1.2")
+}
+
 neoForge {
     version = neoforge_version
     // Automatically enable neoforge AccessTransformers if the file exists

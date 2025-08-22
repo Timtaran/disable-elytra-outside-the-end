@@ -13,6 +13,11 @@
   "license": "${license}",
   "icon": "${mod_id}.png",
   "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.timtaran.deote.DisableElytraOutsideTheEndFabric"
+    ]
+  },
   "mixins": [
     "${mod_id}.mixins.json"
   ],

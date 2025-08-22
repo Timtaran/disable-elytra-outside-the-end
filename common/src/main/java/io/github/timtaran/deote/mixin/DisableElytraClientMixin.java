@@ -1,4 +1,4 @@
-package io.github.timtaran.deote.mixins;
+package io.github.timtaran.deote.mixin;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
