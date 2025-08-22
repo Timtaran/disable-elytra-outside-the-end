@@ -29,7 +29,7 @@ public class DisableElytraServerMixin {
     LivingEntity self = (LivingEntity) (Object) this;
     try {
       if (self.level().dimension() != Level.END) {
-        if (self instanceof ServerPlayer player && player.isFallFlying()) {
+        if (ConfigLoader.getConfig().isWarningMessageEnabled() && self instanceof ServerPlayer player && player.isFallFlying()) {
           player.displayClientMessage(Component.literal(ConfigLoader.getConfig().getFlightDisabledMessage()), true);
         }
 

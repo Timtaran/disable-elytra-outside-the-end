@@ -1,11 +1,9 @@
 package io.github.timtaran.deote.config;
 
-import io.github.timtaran.deote.Constants;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ConfigLoader {
@@ -16,13 +14,6 @@ public class ConfigLoader {
   }
 
   public static void loadConfig(Path configPath) throws ConfigurateException {
-    if (!Files.exists(configPath)) {
-      Constants.LOGGER.info("Config file not found, creating a new one");
-      config = new ConfigModel();
-      saveConfig(configPath);
-      return;
-    }
-
     final HoconConfigurationLoader loader =
             HoconConfigurationLoader.builder().path(configPath).build();
 
