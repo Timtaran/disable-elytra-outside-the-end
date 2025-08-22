@@ -4,7 +4,6 @@ The mod does what it says in the name
 
 Really simple mod I made for my SMP, but maybe someone will find it useful, so I published it
 
-No fancy features such as actionbar notification, customizing dimensions and improved logic (since it can break some mods now, probably, idk), but
-probably later
+Since 1.1.0 you can *customize action bar warning message or disable it* via config (`config/deote.conf`). But because I'm trying to keep mod simple and version agnostic with multi-loader support (and I'm also inexperienced), **your server config changes will not apply to clients**
 
-Mod is **server-sided**, but you'd better to install it on client (be ready your elytras wouldn't open even on servers without this mod, currently)
+It is better to install the mod on the **server-side**, but you can also install it on the client to have better experience (be ready your elytras wouldn't open even on servers without this mod, currently)
