@@ -37,8 +37,15 @@ neoForge {
 }
 
 dependencies {
+    // Add configurate + its dependencies
     jarJar(implementation("org.spongepowered:configurate-hocon:4.1.2"))
     additionalRuntimeClasspath "org.spongepowered:configurate-hocon:4.1.2"
+    jarJar(implementation("org.spongepowered:configurate-core:4.1.2"))
+    additionalRuntimeClasspath "org.spongepowered:configurate-core:4.1.2"
+    jarJar(implementation("com.typesafe:config:1.4.3"))
+    additionalRuntimeClasspath "com.typesafe:config:1.4.3"
+    jarJar(implementation("io.leangen.geantyref:geantyref:1.3.11"))
+    additionalRuntimeClasspath "com.typesafe:config:1.3.11"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
