@@ -37,7 +37,7 @@ neoForge {
 }
 
 dependencies {
-    // Add configurate + its dependencies
+    // Configurate
     jarJar(implementation("org.spongepowered:configurate-hocon:4.1.2"))
     additionalRuntimeClasspath "org.spongepowered:configurate-hocon:4.1.2"
     jarJar(implementation("org.spongepowered:configurate-core:4.1.2"))
