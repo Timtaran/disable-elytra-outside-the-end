@@ -16,7 +16,11 @@ modstitch {
     // https://stonecutter.kikugie.dev/stonecutter/guide/setup#checking-versions
     javaTarget = when (minecraft) {
         "1.20.1" -> 17
+        "1.20.4" -> 17
+        "1.21.1" -> 21
         "1.21.4" -> 21
+        "1.21.8" -> 21
+        "1.21.10" -> 21
         else -> throw IllegalArgumentException("Please store the java version for ${property("deps.minecraft")} in build.gradle.kts!")
     }
 
@@ -29,11 +33,11 @@ modstitch {
     // This metadata is used to fill out the information inside
     // the metadata files found in the templates folder.
     metadata {
-        modId = "examplemod"
-        modName = "Example Mod"
-        modVersion = "1.0.0"
-        modGroup = "com.example"
-        modAuthor = "John Doe, Patrina Doe, Jill Doe"
+        modId = "deote"
+        modName = "Disable Elytra Outside The End"
+        modVersion = "2.0.0"
+        modGroup = "io.github.timtaran.deote"
+        modAuthor = "timtaran"
 
         fun <K, V> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
             block()
@@ -45,7 +49,11 @@ modstitch {
             put("mod_issue_tracker", "https://github.com/modunion/modstitch/issues")
             put("pack_format", when (property("deps.minecraft")) {
                 "1.20.1" -> 15
+                "1.20.4" -> 22
+                "1.21.1" -> 34
                 "1.21.4" -> 46
+                "1.21.8" -> 64
+                "1.21.10" -> 69
                 else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
             }.toString())
         }
@@ -89,7 +97,7 @@ modstitch {
         // true, it will automatically be generated.
         addMixinsToModManifest = true
 
-        configs.register("examplemod")
+        configs.register("deote")
 
         // Most of the time you wont ever need loader specific mixins.
         // If you do, simply make the mixin file and add it like so for the respective loader:

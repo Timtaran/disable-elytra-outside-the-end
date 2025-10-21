@@ -1,5 +1,5 @@
 {
-  "package": "com.example.mymod.mixin",
+  "package": "io.github.timtaran.deote.mixin",
   "required": true,
   "minVersion": "0.8",
   "injectors": {
@@ -7,6 +7,6 @@
   },
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "TitleScreenMixin"
+    "io.github.timtaran.deote.mixin.TitleScreenMixin"
   ]
 }

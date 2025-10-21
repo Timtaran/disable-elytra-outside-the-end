@@ -1,7 +1,7 @@
 //? if fabric {
-package com.example.mymod.loaders.fabric;
+/*package io.github.timtaran.deote.loaders.fabric;
 
-import com.example.mymod.ExampleMod;
+import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ public class FabricEntrypoint implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Hello from FabricEntrypoint!");
-        ExampleMod.initialize();
+        DisableElytraOutsideTheEnd.initialize();
     }
 }
-//?}
+*///?}
