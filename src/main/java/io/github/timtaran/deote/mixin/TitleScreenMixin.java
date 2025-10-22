@@ -1,4 +1,3 @@
-//? if !vanilla {
 package io.github.timtaran.deote.mixin;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
@@ -33,4 +32,3 @@ public class TitleScreenMixin {
         DisableElytraOutsideTheEnd.LOGGER.info(baseString);
     }
 }
-//?}

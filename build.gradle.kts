@@ -1,5 +1,11 @@
 plugins {
-    id("dev.isxander.modstitch.base") version "0.5.12"
+    id("dev.isxander.modstitch.base") version "0.6.4-unstable"
+}
+
+val loader = when {
+    modstitch.isLoom -> "fabric"
+    modstitch.isModDevGradle -> "neoforge"
+    else -> error("Unknown loader")
 }
 
 fun prop(name: String, consumer: (prop: String) -> Unit) {
@@ -7,24 +13,16 @@ fun prop(name: String, consumer: (prop: String) -> Unit) {
         ?.let(consumer)
 }
 
-val minecraft = property("deps.minecraft") as String;
+val mcVersion = property("deps.minecraft") as String
 
 modstitch {
-    minecraftVersion = minecraft
+    minecraftVersion = mcVersion
 
     // Alternatively use stonecutter.eval if you have a lot of versions to target.
     // https://stonecutter.kikugie.dev/stonecutter/guide/setup#checking-versions
-    javaTarget = when (minecraft) {
-        "1.20.1" -> 17
-        "1.20.4" -> 17
-        "1.21.1" -> 21
-        "1.21.4" -> 21
-        "1.21.8" -> 21
-        "1.21.10" -> 21
-        else -> throw IllegalArgumentException("Please store the java version for ${property("deps.minecraft")} in build.gradle.kts!")
-    }
+    javaVersion = if (stonecutter.eval(mcVersion, ">1.20.4")) 21 else 17
 
-    // If parchment doesnt exist for a version yet you can safely
+    // If parchment doesn't exist for a version, yet you can safely
     // omit the "deps.parchment" property from your versioned gradle.properties
     parchment {
         prop("deps.parchment") { mappingsVersion = it }
@@ -38,6 +36,7 @@ modstitch {
         modVersion = "2.0.0"
         modGroup = "io.github.timtaran.deote"
         modAuthor = "timtaran"
+        modLicense = "LGPL-3.0-or-later"
 
         fun <K, V> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
             block()
@@ -46,7 +45,7 @@ modstitch {
         replacementProperties.populate {
             // You can put any other replacement properties/metadata here that
             // modstitch doesn't initially support. Some examples below.
-            put("mod_issue_tracker", "https://github.com/modunion/modstitch/issues")
+            put("mod_issue_tracker", "https://github.com/Timtaran/disable-elytra-outside-the-end")
             put("pack_format", when (property("deps.minecraft")) {
                 "1.20.1" -> 15
                 "1.20.4" -> 22
@@ -62,8 +61,8 @@ modstitch {
     // Fabric Loom (Fabric)
     loom {
         // It's not recommended to store the Fabric Loader version in properties.
-        // Make sure its up to date.
-        fabricLoaderVersion = "0.16.10"
+        // Make sure it's up to date.
+        fabricLoaderVersion = "0.17.3"
 
         // Configure loom like normal in this block.
         configureLoom {
@@ -73,23 +72,10 @@ modstitch {
 
     // ModDevGradle (NeoForge, Forge, Forgelike)
     moddevgradle {
-        enable {
-            prop("deps.forge") { forgeVersion = it }
-            prop("deps.neoform") { neoFormVersion = it }
-            prop("deps.neoforge") { neoForgeVersion = it }
-            prop("deps.mcp") { mcpVersion = it }
-        }
+        prop("deps.neoforge") { neoForgeVersion = it }
 
         // Configures client and server runs for MDG, it is not done by default
         defaultRuns()
-
-        // This block configures the `neoforge` extension that MDG exposes by default,
-        // you can configure MDG like normal from here
-        configureNeoforge {
-            runs.all {
-                disableIdeRun()
-            }
-        }
     }
 
     mixin {
@@ -99,7 +85,7 @@ modstitch {
 
         configs.register("deote")
 
-        // Most of the time you wont ever need loader specific mixins.
+        // Most of the time you won't ever need loader specific mixins.
         // If you do, simply make the mixin file and add it like so for the respective loader:
         // if (isLoom) configs.register("examplemod-fabric")
         // if (isModDevGradleRegular) configs.register("examplemod-neoforge")
@@ -107,16 +93,13 @@ modstitch {
     }
 }
 
-// Stonecutter constants for mod loaders.
-// See https://stonecutter.kikugie.dev/stonecutter/guide/comments#condition-constants
-var constraint: String = name.split("-")[1]
 stonecutter {
-    consts(
-        "fabric" to constraint.equals("fabric"),
-        "neoforge" to constraint.equals("neoforge"),
-        "forge" to constraint.equals("forge"),
-        "vanilla" to constraint.equals("vanilla")
-    )
+    constants {
+        put("fabric", modstitch.isLoom)
+        put("neoforge", modstitch.isModDevGradleRegular)
+        put("forge", modstitch.isModDevGradleLegacy)
+        put("forgelike", modstitch.isModDevGradle)
+    }
 }
 
 // All dependencies should be specified through modstitch's proxy configuration.
@@ -125,8 +108,10 @@ stonecutter {
 // use the modstitch.createProxyConfigurations(sourceSets["client"]) function.
 dependencies {
     modstitch.loom {
-        modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:0.112.0+1.21.4")
+        modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
     }
 
-    // Anything else in the dependencies block will be used for all platforms.
+    modstitchModImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-${loader}") {
+        exclude(group = "thedarkcolour")
+    }
 }
