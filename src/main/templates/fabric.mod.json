@@ -9,5 +9,8 @@
     "main": [
       "io.github.timtaran.deote.platform.PlatformEntrypoint"
     ]
+  },
+  "depends": {
+    "yet_another_config_lib_v3": ">=${yacl_version}"
   }
 }

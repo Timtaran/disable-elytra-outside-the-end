@@ -19,3 +19,9 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type = "required"
+
+[[dependencies.${mod_id}]]
+modId = "yet_another_config_lib_v3"
+type = "required"
+versionRange="[${yacl_version},)"
+side="CLIENT"
