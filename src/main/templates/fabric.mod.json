@@ -7,7 +7,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.timtaran.deote.loaders.FabricEntrypoint"
+      "io.github.timtaran.deote.platform.PlatformEntrypoint"
     ]
   }
 }

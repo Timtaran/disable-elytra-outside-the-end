@@ -16,16 +16,16 @@ public class TitleScreenMixin {
         /// https://stonecutter.kikugie.dev/stonecutter/guide/comments
 
         //? if fabric {
-        /*baseString = baseString.replace("%LOADER%", "Fabric Loader");
-        *///?} else if neoforge {
-        baseString = baseString.replace("%LOADER%", "NeoForge");
-        //?} else {
+        baseString = baseString.replace("%LOADER%", "Fabric Loader");
+        //?} else if neoforge {
+        /*baseString = baseString.replace("%LOADER%", "NeoForge");
+        *///?} else {
         /*baseString = baseString.replace("%LOADER%", "Legacy Forge");
         *///?}
 
         //? if 1.21.4 {
-        /*baseString = baseString.replace("%MINECRAFT%", "1.21.4");
-        *///?} else if 1.20.1 {
+        baseString = baseString.replace("%MINECRAFT%", "1.21.4");
+        //?} else if 1.20.1 {
         /*baseString = baseString.replace("%MINECRAFT", "1.20.1");
         *///?}
 
