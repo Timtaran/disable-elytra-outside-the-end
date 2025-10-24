@@ -110,6 +110,7 @@ stonecutter {
 dependencies {
     modstitch.loom {
         modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+        modstitchModImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
     }
 
     modstitchModImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-${loader}") {
