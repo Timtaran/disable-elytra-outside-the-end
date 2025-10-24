@@ -9,6 +9,6 @@ public class DisableElytraOutsideTheEnd {
     public static final String MOD_ID = "deote";
 
     public static void initialize() {
-        DeoteConfig.HANDLER.load();
+        DeoteConfig.load();
     }
 }

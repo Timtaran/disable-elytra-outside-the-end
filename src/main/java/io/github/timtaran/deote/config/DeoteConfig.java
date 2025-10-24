@@ -2,6 +2,7 @@ package io.github.timtaran.deote.config;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
+import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.util.TextUtils;
 import com.google.gson.GsonBuilder;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
@@ -63,7 +64,16 @@ public class DeoteConfig {
                                 .build()
                         )
                         .build())
-                .save(HANDLER::save)
+                .save(DeoteConfig::save)
                 .build().generateScreen(parentScreen);
+    }
+
+    public static void save() {
+        HANDLER.save();
+    }
+
+    public static void load() {
+        HANDLER.load();
+        GlobalStorage.workingMode = HANDLER.instance().workingMode;
     }
 }

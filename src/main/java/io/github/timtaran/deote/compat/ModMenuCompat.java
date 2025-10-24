@@ -1,3 +1,4 @@
+//? if fabric {
 package io.github.timtaran.deote.compat;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -10,3 +11,4 @@ public class ModMenuCompat implements ModMenuApi {
         return parentScreen -> DeoteConfig.HANDLER.instance().getConfigScreen(parentScreen);
     }
 }
+//?}

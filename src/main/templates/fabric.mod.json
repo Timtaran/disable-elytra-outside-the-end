@@ -12,6 +12,9 @@
     ],
     "modmenu": [
       "io.github.timtaran.deote.compat.ModMenuCompat"
+    ],
+    "client": [
+      "io.github.timtaran.deote.platform.PlatformClientEntrypoint"
     ]
   },
   "depends": {
