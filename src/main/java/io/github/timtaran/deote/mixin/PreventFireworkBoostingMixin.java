@@ -5,7 +5,12 @@ import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.WorkingMode;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+//? if 1.21.1 {
+/*import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemStack;
+*///?} elif >=1.21.4 {
 import net.minecraft.world.InteractionResult;
+//?}
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FireworkRocketItem;
@@ -20,7 +25,16 @@ import java.lang.reflect.Method;
 @Mixin(value = FireworkRocketItem.class)
 public class PreventFireworkBoostingMixin {
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void init(Level level, Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> callbackInfo) {
+    private void init(
+            Level level,
+            Player player,
+            InteractionHand interactionHand,
+            //? if 1.21.1 {
+            /*CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callbackInfo)
+            *///?} elif >= 1.21.4 {
+            CallbackInfoReturnable<InteractionResult> callbackInfo)
+            //?}
+    {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FIREWORKS) {
             try {
                 if (level.dimension() != Level.END) {
@@ -29,7 +43,11 @@ public class PreventFireworkBoostingMixin {
                     boolean isGliding = (boolean) m.invoke(player, 7);
 
                     if (isGliding) {
+                        //? if 1.21.1 {
+                        /*callbackInfo.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));
+                        *///?} elif >= 1.21.4 {
                         callbackInfo.setReturnValue(InteractionResult.PASS);
+                        //?}
 
                         if (GlobalStorage.deoteConfig.warningMessageEnabled) {
                             if (!level.isClientSide()) {

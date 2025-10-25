@@ -47,8 +47,6 @@ modstitch {
             // modstitch doesn't initially support. Some examples below.
             put("mod_issue_tracker", "https://github.com/Timtaran/disable-elytra-outside-the-end")
             put("pack_format", when (property("deps.minecraft")) {
-                "1.20.1" -> 15
-                "1.20.4" -> 22
                 "1.21.1" -> 34
                 "1.21.4" -> 46
                 "1.21.8" -> 64

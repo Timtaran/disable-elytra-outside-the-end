@@ -79,7 +79,7 @@ public class DeoteConfig {
                                         .description(OptionDescription.of(TextUtils.translatable("config.groups.main.working_mode.description")))
                                         .binding(
                                                 DEFAULT_WORKING_MODE,
-                                                () -> this.workingMode,
+                                                () -> this.workingMode != null ? this.workingMode : DEFAULT_WORKING_MODE,
                                                 newVal -> this.workingMode = newVal
                                         )
                                         .controller(opt -> EnumControllerBuilder.create(opt)

@@ -3,6 +3,7 @@ package io.github.timtaran.deote.platform;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.config.DeoteConfig;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
+
 //? if fabric {
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -23,6 +24,7 @@ public class PlatformEntrypoint implements ModInitializer {
 }
 //?} elif neoforge {
 /*import net.minecraft.server.level.ServerPlayer;
+import io.github.timtaran.deote.GlobalStorage;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
@@ -57,7 +59,6 @@ public class PlatformEntrypoint {
     }
 
     private static void syncConfigs(final ConfigSyncS2CPacket payload, final IPayloadContext context) {
-        DisableElytraOutsideTheEnd.LOGGER.debug("got packet sync packet from server");
         GlobalStorage.deoteConfig = payload.config();
         GlobalStorage.isGotSyncPacket = true;
     }
