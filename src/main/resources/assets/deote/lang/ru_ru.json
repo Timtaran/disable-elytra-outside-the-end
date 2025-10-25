@@ -1,0 +1,13 @@
+{
+  "deote.config.categories.main": "Главная",
+  "deote.config.groups.main": "Основные настройки",
+  "deote.config.groups.main.working_mode": "Режим работы",
+  "deote.config.groups.main.working_mode.description": "Определяет, как будет работать мод:\n\n§lВЫКЛ§r - Полностью отключает мод\n§lФЕЙРВЕРКИ§r - Отключает ускорение при помощи фейрверков за пределами Края\n§lПОЛЁТ§r - Отключает полет на элитрах за пределами Края",
+  "deote.config.groups.main.warning_message": "Предупреждение",
+  "deote.config.groups.main.warning_message.description": "Показывать ли игроку сообщение в панели действий (action bar), когда действие заблокировано",
+  "deote.config.groups.main.flight_disabled_message": "Сообщение о запрете полёта",
+  "deote.config.groups.main.fireworks_disabled_message": "Сообщение о запрете фейерверков",
+  "deote.working_mode.none": "ВЫКЛ",
+  "deote.working_mode.fireworks": "ФЕЙРВЕРКИ",
+  "deote.working_mode.flying": "ПОЛЁТ"
+}

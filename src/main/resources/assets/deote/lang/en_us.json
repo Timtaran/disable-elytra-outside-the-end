@@ -1,0 +1,13 @@
+{
+  "deote.config.categories.main": "Main",
+  "deote.config.groups.main": "Main Settings",
+  "deote.config.groups.main.working_mode": "Working Mode",
+  "deote.config.groups.main.working_mode.description": "Defines how the mod operates:\n\n§lNONE§r - Disables the mod entirely\n§lFIREWORKS§r - Prevents firework boosting outside the End\n§lFLYING§r - Prevents flying outside the End",
+  "deote.config.groups.main.warning_message": "Warning Message",
+  "deote.config.groups.main.warning_message.description": "Whether the player should see a warning message on the action bar when an action is blocked",
+  "deote.config.groups.main.flight_disabled_message": "Flight Disabled Message",
+  "deote.config.groups.main.fireworks_disabled_message": "Fireworks Disabled Message",
+  "deote.working_mode.none": "NONE",
+  "deote.working_mode.fireworks": "FIREWORKS",
+  "deote.working_mode.flying": "FLYING"
+}

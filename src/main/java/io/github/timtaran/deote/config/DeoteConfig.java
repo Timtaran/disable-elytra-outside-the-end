@@ -72,7 +72,6 @@ public class DeoteConfig {
                 .title(Component.literal("Disable Elytra Outside The End"))
                 .category(ConfigCategory.createBuilder()
                         .name(TextUtils.translatable("config.categories.main"))
-                        .tooltip(TextUtils.translatable("config.categories.main.tooltip"))
                         .group(OptionGroup.createBuilder()
                                 .name(TextUtils.translatable("config.groups.main"))
                                 .option(Option.<WorkingMode>createBuilder()
@@ -102,7 +101,6 @@ public class DeoteConfig {
                                 .option(
                                         Option.<String>createBuilder()
                                                 .name(TextUtils.translatable("config.groups.main.flight_disabled_message"))
-                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.flight_disabled_message.description")))
                                                 .binding(
                                                         DEFAULT_FLIGHT_DISABLED_MESSAGE,
                                                         () -> this.flightDisabledMessage,
@@ -114,7 +112,6 @@ public class DeoteConfig {
                                 .option(
                                         Option.<String>createBuilder()
                                                 .name(TextUtils.translatable("config.groups.main.fireworks_disabled_message"))
-                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.fireworks_disabled_message.description")))
                                                 .binding(
                                                         DEFAULT_FIREWORKS_DISABLED_MESSAGE,
                                                         () -> this.fireworksDisabledMessage,
