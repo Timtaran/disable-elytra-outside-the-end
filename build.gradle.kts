@@ -1,5 +1,12 @@
+import java.util.Locale
+
+fun String.capitalized() =
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+
 plugins {
     id("dev.isxander.modstitch.base") version "0.6.4-unstable"
+
+    id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
 
 val loader = when {
@@ -113,5 +120,77 @@ dependencies {
 
     modstitchModImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-${loader}") {
         exclude(group = "thedarkcolour")
+    }
+}
+
+val finalJarTasks = listOf(modstitch.finalJarTask)
+
+val buildAndCollect by tasks.registering(Copy::class) {
+    group = "publishing"
+    description = "Collect final mod JAR(s) into build/finalJars"
+    finalJarTasks.forEach { jar ->
+        dependsOn(jar)
+        from(jar.flatMap { it.archiveFile })
+    }
+    into(rootProject.layout.buildDirectory.dir("finalJars"))
+}
+
+val releaseModVersion by tasks.registering {
+    group = "publishing"
+    description = "Runs publishMods (Modrinth)."
+    dependsOn("publishMods")
+}
+
+/* publishMods (mod-publish-plugin) — Modrinth-only configuration */
+publishMods {
+    // Control dry run with -PpublishDryRun=false (default = true)
+    dryRun = findProperty("publishDryRun")?.toString()?.toBoolean() ?: true
+
+    // Use the final mod JAR produced by modstitch
+    file = modstitch.finalJarTask.flatMap { it.archiveFile }
+
+    // friendly name shown in logs / UI
+    displayName = "[${loader.capitalized()}] ${modstitch.metadata.modName.get()} for $mcVersion"
+
+    // add loader tag (fabric/neoforge/etc)
+    modLoaders.add(loader)
+
+    type = STABLE
+    changelog = rootProject.file("CHANGELOG.md").readText()
+
+    fun versionList(prop: String) = findProperty(prop)?.toString()
+        ?.split(',')
+        ?.map { it.trim() }
+        ?: emptyList()
+
+    val stableMCVersions = versionList("pub.stableMC")
+
+    // ---- MODRINTH ----
+    val modrinthId: String? = findProperty("modrinthId")?.toString()
+    if (!modrinthId.isNullOrBlank() && hasProperty("modrinth.token")) {
+        modrinth {
+            // project id or slug — set in gradle.properties as modrinthId
+            projectId.set(modrinthId)
+
+            // access token — set in gradle.properties as modrinth.token (or pass -Pmodrinth.token=...)
+            accessToken.set(findProperty("modrinth.token")?.toString())
+
+            // tags for which Minecraft versions the file will be listed under
+            minecraftVersions.addAll(stableMCVersions)
+            minecraftVersions.addAll(versionList("pub.modrinthMC"))
+
+            // optional text used in announcements
+            announcementTitle = "Download $mcVersion for ${loader.replaceFirstChar { it.uppercase() }} from Modrinth"
+
+            // example of declaring dependencies (change/remove as needed)
+            requires { slug.set("yacl") }
+            if (modstitch.isLoom) {
+                requires { slug.set("fabric-api") }
+                optional { slug.set("modmenu") }
+            }
+        }
+    } else {
+        // helpful log when disabled
+        logger.lifecycle("Modrinth publishing disabled — set 'modrinthId' and 'modrinth.token' to enable.")
     }
 }
