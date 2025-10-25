@@ -8,7 +8,7 @@ import io.github.timtaran.deote.config.DeoteConfig;
 public class ModMenuCompat implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parentScreen -> DeoteConfig.HANDLER.instance().getConfigScreen(parentScreen);
+        return parentScreen -> DeoteConfig.getInstance().getConfigScreen(parentScreen);
     }
 }
 //?}

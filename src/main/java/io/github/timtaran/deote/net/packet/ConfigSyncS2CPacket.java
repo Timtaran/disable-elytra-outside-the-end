@@ -1,5 +1,8 @@
 package io.github.timtaran.deote.net.packet;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import io.github.timtaran.deote.config.DeoteConfig;
 import io.github.timtaran.deote.util.DeoteIdentifier;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -7,22 +10,21 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jetbrains.annotations.NotNull;
 
-public record ConfigSyncS2CPacket(String workingMode) implements CustomPacketPayload {
+public record ConfigSyncS2CPacket(DeoteConfig config) implements CustomPacketPayload {
 
-    public static final CustomPacketPayload.Type<ConfigSyncS2CPacket> TYPE = new CustomPacketPayload.Type<>(DeoteIdentifier.get("config_sync"));
+    public static final CustomPacketPayload.Type<ConfigSyncS2CPacket> TYPE =
+            new CustomPacketPayload.Type<>(DeoteIdentifier.get("config_sync"));
 
-    // Each pair of elements defines the stream codec of the element to encode/decode and the getter for the element to encode
-    // 'name' will be encoded and decoded as a string
-    // 'age' will be encoded and decoded as an integer
-    // The final parameter takes in the previous parameters in the order they are provided to construct the payload object
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
     public static final StreamCodec<ByteBuf, ConfigSyncS2CPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
-            ConfigSyncS2CPacket::workingMode,
-            ConfigSyncS2CPacket::new
+            packet -> GSON.toJson(packet.config()),
+            json -> new ConfigSyncS2CPacket(GSON.fromJson(json, DeoteConfig.class))
     );
 
     @Override
-    public CustomPacketPayload.@NotNull Type<? extends CustomPacketPayload> type() {
+    public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }

@@ -5,8 +5,11 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PreventServerFlyingMixin"
+  ],
   "client": [
-    "TitleScreenMixin"
+    "PreventClientFlyingMixin"
   ]
 }
