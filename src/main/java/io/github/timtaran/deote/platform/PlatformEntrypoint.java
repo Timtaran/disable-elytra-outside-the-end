@@ -1,7 +1,6 @@
 package io.github.timtaran.deote.platform;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
-import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.DeoteConfig;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
 //? if fabric {
@@ -60,7 +59,7 @@ public class PlatformEntrypoint {
     private static void syncConfigs(final ConfigSyncS2CPacket payload, final IPayloadContext context) {
         DisableElytraOutsideTheEnd.LOGGER.debug("got packet sync packet from server");
         GlobalStorage.deoteConfig = payload.config();
-        GlobalStorage.gotSyncPacket = true;
+        GlobalStorage.isGotSyncPacket = true;
     }
 }
 *///?}

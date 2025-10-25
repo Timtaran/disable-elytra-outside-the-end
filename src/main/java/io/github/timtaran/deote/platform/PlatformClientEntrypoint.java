@@ -9,7 +9,6 @@ import io.github.timtaran.deote.config.DeoteConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
 
 
@@ -17,19 +16,35 @@ public class PlatformClientEntrypoint implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(ConfigSyncS2CPacket.TYPE, (payload, context) ->
-                GlobalStorage.deoteConfig = payload.config()
-
+                {
+                    GlobalStorage.deoteConfig = payload.config();
+                    GlobalStorage.isGotSyncPacket = true;
+                }
         );
 
+        ClientPlayConnectionEvents.INIT.register((phase, listener) -> {
+            DisableElytraOutsideTheEnd.LOGGER.info(String.valueOf(listener.hasSingleplayerServer()));
+            if (!listener.hasSingleplayerServer()) {
+                if (!GlobalStorage.isGotSyncPacket) {
+                    GlobalStorage.setNullConfig();
+                }
+                GlobalStorage.isConnectedToServer = true;
+            }
+        });
+
         ClientPlayConnectionEvents.DISCONNECT.register(
-                (phase, listener) ->
-                        DeoteConfig.updateStorage()
+                (phase, listener) -> {
+                    DeoteConfig.updateStorage();
+                    GlobalStorage.isGotSyncPacket = false;
+                    GlobalStorage.isConnectedToServer = false;
+                }
 
         );
     }
 }
 //?} elif neoforge {
-/*import net.neoforged.api.distmarker.Dist;
+/*import net.minecraft.client.Minecraft;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -50,15 +65,20 @@ public class PlatformClientEntrypoint {
 
     @SubscribeEvent
     public static void onClientConnect(ClientPlayerNetworkEvent.LoggingIn event) {
-        if (!GlobalStorage.gotSyncPacket) {
-            GlobalStorage.setNullConfig();
+        if (!Minecraft.getInstance().hasSingleplayerServer()) {
+            DisableElytraOutsideTheEnd.LOGGER.info(event.getMultiPlayerGameMode().toString());
+            if (!GlobalStorage.isGotSyncPacket) {
+                GlobalStorage.setNullConfig();
+            }
+            GlobalStorage.isConnectedToServer = true;
         }
     }
 
     @SubscribeEvent
     public static void onClientDisconnect(ClientPlayerNetworkEvent.LoggingOut event) {
         DeoteConfig.updateStorage();
-        GlobalStorage.gotSyncPacket = false;
+        GlobalStorage.isGotSyncPacket = false;
+        GlobalStorage.isConnectedToServer = false;
     }
 }
 

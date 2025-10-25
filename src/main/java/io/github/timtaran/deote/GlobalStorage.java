@@ -6,7 +6,8 @@ import io.github.timtaran.deote.config.WorkingMode;
 
 public class GlobalStorage {
     public static DeoteConfig deoteConfig;
-    public static boolean gotSyncPacket;
+    public static boolean isGotSyncPacket = false;
+    public static boolean isConnectedToServer = false;
 
     public static void setNullConfig() {
         deoteConfig = new DeoteConfig(

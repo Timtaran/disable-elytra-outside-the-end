@@ -38,13 +38,13 @@ public class DeoteConfig {
         this.fireworksDisabledMessage = fireworksDisabledMessage;
     }
 
-    public DeoteConfig() {}
+    public DeoteConfig() {
+    }
 
     private static final WorkingMode DEFAULT_WORKING_MODE = WorkingMode.FLYING;
     private static final boolean DEFAULT_WARNING_MESSAGE_ENABLED = true;
     private static final String DEFAULT_FLIGHT_DISABLED_MESSAGE = "§cThe atmosphere here is too dense to allow the wings to open";
     private static final String DEFAULT_FIREWORKS_DISABLED_MESSAGE = "§cIt's hard to light a fuse in flight";
-
 
 
     @SerialEntry
@@ -143,6 +143,8 @@ public class DeoteConfig {
     }
 
     public static void updateStorage() {
-        GlobalStorage.deoteConfig = DeoteConfig.getInstance();
+        if (!GlobalStorage.isConnectedToServer) {
+            GlobalStorage.deoteConfig = DeoteConfig.getInstance();
+        }
     }
 }

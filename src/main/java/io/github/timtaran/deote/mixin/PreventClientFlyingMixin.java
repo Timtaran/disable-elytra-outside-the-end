@@ -36,7 +36,7 @@ public abstract class PreventClientFlyingMixin {
                     return true;
                 }
             } else {
-                self.stopFallFlying();
+                self.startFallFlying();
                 return true;
             }
         } else {
