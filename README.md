@@ -9,7 +9,7 @@ since v2.0:
 - Mod is **not** version-agnostic now
 
 TODO:
-- [ ] Config reload config on server (on integrated server you can edit config in-game via YACL)
+- [ ] Reload config command (no need to restart server)
 - [ ] Spigot/Paper plugin (why not)
 - [ ] Custom dimensions list
 
