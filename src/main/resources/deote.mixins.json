@@ -8,7 +8,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "PreventServerFlyingMixin",
-    "PreventFireworkBoostingMixin"
+    "PreventFireworkBoostingMixin",
+    "EntityMixin"
   ],
   "client": [
     "PreventClientFlyingMixin"

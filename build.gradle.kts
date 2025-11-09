@@ -40,7 +40,7 @@ modstitch {
     metadata {
         modId = "deote"
         modName = "Disable Elytra Outside The End"
-        modVersion = "2.0.0"
+        modVersion = "2.1.0"
         modGroup = "io.github.timtaran.deote"
         modAuthor = "timtaran"
         modLicense = "LGPL-3.0-or-later"
@@ -125,6 +125,17 @@ dependencies {
 
 val finalJarTasks = listOf(modstitch.finalJarTask)
 
+modstitch.finalJarTask.configure {
+    archiveFileName.set(
+        providers.provider {
+            val modId = modstitch.metadata.modId.get()
+            val modVer = modstitch.metadata.modVersion.get()
+            "$modId-$modVer-$mcVersion.jar"
+        }
+    )
+}
+
+
 val buildAndCollect by tasks.registering(Copy::class) {
     group = "publishing"
     description = "Collect final mod JAR(s) into build/finalJars"
@@ -166,7 +177,7 @@ publishMods {
     val stableMCVersions = versionList("pub.stableMC")
 
     // ---- MODRINTH ----
-    val modrinthId: String? = findProperty("modrinthId")?.toString()
+    val modrinthId: String? = findProperty("modrinth.id")?.toString()
     if (!modrinthId.isNullOrBlank() && hasProperty("modrinth.token")) {
         modrinth {
             // project id or slug — set in gradle.properties as modrinthId
@@ -191,6 +202,6 @@ publishMods {
         }
     } else {
         // helpful log when disabled
-        logger.lifecycle("Modrinth publishing disabled — set 'modrinthId' and 'modrinth.token' to enable.")
+        logger.lifecycle("Modrinth publishing disabled — set 'modrinth.id' and 'modrinth.token' to enable.")
     }
 }
