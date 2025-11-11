@@ -21,6 +21,7 @@ fun prop(name: String, consumer: (prop: String) -> Unit) {
 }
 
 val mcVersion = property("deps.minecraft") as String
+val modMetaVersion = property("mod.metadata.version") as String
 
 modstitch {
     minecraftVersion = mcVersion
@@ -38,12 +39,12 @@ modstitch {
     // This metadata is used to fill out the information inside
     // the metadata files found in the templates folder.
     metadata {
-        modId = "deote"
-        modName = "Disable Elytra Outside The End"
-        modVersion = "2.1.0"
-        modGroup = "io.github.timtaran.deote"
-        modAuthor = "timtaran"
-        modLicense = "LGPL-3.0-or-later"
+        modId = property("mod.metadata.id") as String
+        modName = property("mod.metadata.name") as String
+        modVersion = "$modMetaVersion-$loader+mc$mcVersion"
+        modGroup = property("mod.metadata.group") as String
+        modAuthor = property("mod.metadata.author") as String
+        modLicense = property("mod.metadata.license") as String
 
         fun <K, V> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
             block()
@@ -125,17 +126,6 @@ dependencies {
 
 val finalJarTasks = listOf(modstitch.finalJarTask)
 
-modstitch.finalJarTask.configure {
-    archiveFileName.set(
-        providers.provider {
-            val modId = modstitch.metadata.modId.get()
-            val modVer = modstitch.metadata.modVersion.get()
-            "$modId-$modVer-$mcVersion.jar"
-        }
-    )
-}
-
-
 val buildAndCollect by tasks.registering(Copy::class) {
     group = "publishing"
     description = "Collect final mod JAR(s) into build/finalJars"
@@ -166,8 +156,17 @@ publishMods {
     // add loader tag (fabric/neoforge/etc)
     modLoaders.add(loader)
 
+    fun getChangelogForVersion(changelogText: String, version: String): String? {
+        // looking for "# v2.1.0" or "# 2.1.0"
+        val escapedVersion = Regex.escape(version)
+        val regex = Regex("(?m)(?s)^#\\s*v?$escapedVersion\\s*\\r?\\n(.*?)(?=^#\\s*v?\\d|\\z)")
+        return regex.find(changelogText)?.groups?.get(1)?.value?.trim()
+    }
+
     type = STABLE
-    changelog = rootProject.file("CHANGELOG.md").readText()
+    changelog = getChangelogForVersion(rootProject.file("CHANGELOG.md").readText(), modMetaVersion)
+
+    logger.lifecycle(changelog.toString())
 
     fun versionList(prop: String) = findProperty(prop)?.toString()
         ?.split(',')
