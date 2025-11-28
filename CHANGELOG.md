@@ -1,3 +1,9 @@
+# v2.2.0
+
+- Added in-game config reload (LAN + server command)
+- Added server config edit commands
+- Added availability to configure dimensions
+
 # v2.1.0
 
 Fix server-side not working because bad mixins.
