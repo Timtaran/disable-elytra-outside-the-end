@@ -4,7 +4,7 @@ fun String.capitalized() =
     replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.6.4-unstable"
+    id("dev.isxander.modstitch.base") version "0.7.1-unstable"
 
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
@@ -53,7 +53,7 @@ modstitch {
         replacementProperties.populate {
             // You can put any other replacement properties/metadata here that
             // modstitch doesn't initially support. Some examples below.
-            put("mod_issue_tracker", "https://github.com/Timtaran/disable-elytra-outside-the-end")
+            put("mod_issue_tracker", property("mod.metadata.issue_tracker") as String)
             put("pack_format", when (property("deps.minecraft")) {
                 "1.21.1" -> 34
                 "1.21.4" -> 46
