@@ -4,25 +4,25 @@ issueTrackerURL = "${mod_issue_tracker}"
 license = "${mod_license}"
 
 [[mods]]
-    modId = "${mod_id}"
-    version = "${mod_version}"
-    displayName = "${mod_name}"
-    description = '''${mod_description}'''
-    authors = "${mod_author}"
-    logoFile = "${mod_id}.png"
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+description = '''${mod_description}'''
+authors = "${mod_author}"
+logoFile = "${mod_id}.png"
 
-[[dependencies.${mod_id}]]
-    modId = "neoforge"
-    type = "required"
-    ordering = "NONE"
-    side = "BOTH"
+[[dependencies.${ mod_id }]]
+modId = "neoforge"
+type = "required"
+ordering = "NONE"
+side = "BOTH"
 
-[[dependencies.${mod_id}]]
-    modId = "minecraft"
-    type = "required"
+[[dependencies.${ mod_id }]]
+modId = "minecraft"
+type = "required"
 
-[[dependencies.${mod_id}]]
+[[dependencies.${ mod_id }]]
 modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange="[${yacl_version},)"
-side="CLIENT"
+versionRange = "[${yacl_version},)"
+side = "CLIENT"

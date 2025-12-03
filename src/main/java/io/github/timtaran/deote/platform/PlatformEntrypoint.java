@@ -1,11 +1,13 @@
 package io.github.timtaran.deote.platform;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
+import io.github.timtaran.deote.commands.DeoteCommands;
 import io.github.timtaran.deote.config.DeoteConfig;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
 
 //? if fabric {
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -20,6 +22,8 @@ public class PlatformEntrypoint implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
                 // Fabric server doesn't care if client doesn't have channel so we're not catching any exceptions here
                 ServerPlayNetworking.send(handler.player, new ConfigSyncS2CPacket(DeoteConfig.getInstance())));
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> DeoteCommands.registerCommands(dispatcher));
     }
 }
 //?} elif neoforge {

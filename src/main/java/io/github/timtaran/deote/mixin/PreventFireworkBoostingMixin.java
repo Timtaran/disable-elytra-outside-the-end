@@ -29,17 +29,17 @@ public class PreventFireworkBoostingMixin {
             InteractionHand interactionHand,
             //? if 1.21.1 {
             /*CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callbackInfo)
-            *///?} elif >= 1.21.4 {
+             *///?} elif >= 1.21.4 {
             CallbackInfoReturnable<InteractionResult> callbackInfo)
-            //?}
+    //?}
     {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FIREWORKS) {
             try {
-                if (level.dimension() != Level.END) {
+                if (!GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().location().toString())) {
                     if (player.isFallFlying()) {
                         //? if 1.21.1 {
                         /*callbackInfo.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));
-                        *///?} elif >= 1.21.4 {
+                         *///?} elif >= 1.21.4 {
                         callbackInfo.setReturnValue(InteractionResult.PASS);
                         //?}
 

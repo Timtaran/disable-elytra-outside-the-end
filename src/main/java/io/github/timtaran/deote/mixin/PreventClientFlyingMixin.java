@@ -14,7 +14,6 @@ import net.minecraft.world.item.Items;
 *///?} elif >=1.21.4 {
 import org.spongepowered.asm.mixin.Shadow;
 //?}
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,12 +28,11 @@ public abstract class PreventClientFlyingMixin {
     protected abstract boolean canGlide();
     //?}
 
-
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
     private void onTryToStartFallFlying(CallbackInfoReturnable<Boolean> callbackInfo) {
         Player self = (Player) (Object) this;
 
-        if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING && canFallFlying(self) && self.level().dimension() != Level.END) {
+        if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING && canFallFlying(self) && !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())) {
             if (GlobalStorage.deoteConfig.warningMessageEnabled) {
                 Minecraft.getInstance().gui.setOverlayMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), false);
             }
@@ -57,6 +55,6 @@ public abstract class PreventClientFlyingMixin {
                 ^///?}
         *///?} elif >= 1.21.4 {
         return (!self.isFallFlying() && canGlide() && !self.isInWater());
-         //?}
+        //?}
     }
 }

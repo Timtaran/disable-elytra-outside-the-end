@@ -1,6 +1,5 @@
 package io.github.timtaran.deote.platform;
 
-import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.DeoteConfig;
 
@@ -23,7 +22,6 @@ public class PlatformClientEntrypoint implements ClientModInitializer {
         );
 
         ClientPlayConnectionEvents.INIT.register((phase, listener) -> {
-            DisableElytraOutsideTheEnd.LOGGER.info(String.valueOf(listener.hasSingleplayerServer()));
             if (!listener.hasSingleplayerServer()) {
                 if (!GlobalStorage.isGotSyncPacket) {
                     GlobalStorage.setNullConfig();

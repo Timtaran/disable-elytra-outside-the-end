@@ -6,7 +6,6 @@ import io.github.timtaran.deote.config.WorkingMode;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,9 +22,12 @@ public abstract class PreventServerFlyingMixin {
     private void updateFallFlying(CallbackInfo callbackInfo) {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING) {
             LivingEntity self = (LivingEntity) (Object) this;
+
             try {
-                if (self.level().dimension() != Level.END) {
-                    if (GlobalStorage.deoteConfig.warningMessageEnabled && self instanceof ServerPlayer player && player.isFallFlying() && !self.level().isClientSide()) {
+                if (self.level().isClientSide()) return;
+
+                if (!GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())) {
+                    if (GlobalStorage.deoteConfig.warningMessageEnabled && self instanceof ServerPlayer player && player.isFallFlying()) {
                         player.displayClientMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), true);
                     }
 
