@@ -163,7 +163,7 @@ publishMods {
         return regex.find(changelogText)?.groups?.get(1)?.value?.trim()
     }
 
-    type = STABLE
+    type = BETA
     changelog = getChangelogForVersion(rootProject.file("CHANGELOG.md").readText(), modMetaVersion)
 
     logger.lifecycle(changelog.toString())

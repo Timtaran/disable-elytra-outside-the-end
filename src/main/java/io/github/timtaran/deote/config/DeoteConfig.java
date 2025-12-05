@@ -16,7 +16,7 @@ import io.github.timtaran.deote.util.DeoteIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
+// import net.minecraft.server.MinecraftServer;  // causes java.lang.RuntimeException: Cannot load class net.minecraft.client.server.IntegratedServer in environment type SERVER
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
 //?} elif neoforge {
@@ -76,11 +76,12 @@ public class DeoteConfig {
     }
 
     public static void save() {
-        MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
-
+        /*MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
         if (server != null) {
             PlatformEntrypoint.resendConfig(server);
         }
+        */
+
         HANDLER.save();
         updateStorage();
     }
