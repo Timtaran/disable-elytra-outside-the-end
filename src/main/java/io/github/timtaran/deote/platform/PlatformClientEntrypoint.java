@@ -49,6 +49,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 
 
 @Mod(value = DisableElytraOutsideTheEnd.MOD_ID, dist = Dist.CLIENT)
@@ -64,7 +65,6 @@ public class PlatformClientEntrypoint {
     @SubscribeEvent
     public static void onClientConnect(ClientPlayerNetworkEvent.LoggingIn event) {
         if (!Minecraft.getInstance().hasSingleplayerServer()) {
-            DisableElytraOutsideTheEnd.LOGGER.info(event.getMultiPlayerGameMode().toString());
             if (!GlobalStorage.isGotSyncPacket) {
                 GlobalStorage.setNullConfig();
             }

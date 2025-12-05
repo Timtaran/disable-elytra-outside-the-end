@@ -1,6 +1,5 @@
 package io.github.timtaran.deote.commands;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -112,6 +111,13 @@ public class DeoteCommands {
         return 1;
     }
 
+    private static int reloadConfig(CommandContext<CommandSourceStack> context) {
+        ConfigProvider.reload(context.getSource().getServer());
+        context.getSource().sendSuccess(Messages.CONFIG_RELOAD_SUCCESS, false);
+
+        return 1;
+    }
+
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("deote")
@@ -131,10 +137,7 @@ public class DeoteCommands {
                                 ))
 
                         .then(Commands.literal("reload")
-                                .executes(ctx -> {
-                                    // TODO reload and re-send config for every player on server
-                                    return Command.SINGLE_SUCCESS;
-                                })
+                                .executes(DeoteCommands::reloadConfig)
                         )
 
                         .then(Commands.literal("config")

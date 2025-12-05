@@ -3,7 +3,9 @@ package io.github.timtaran.deote.commands;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.config.DeoteConfig;
+import io.github.timtaran.deote.platform.PlatformEntrypoint;
 import io.github.timtaran.deote.util.TextUtils;
+import net.minecraft.server.MinecraftServer;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -129,6 +131,11 @@ public final class ConfigProvider {
 
     public static void save() {
         DeoteConfig.save();
+    }
+
+    public static void reload(MinecraftServer server) {
+        DeoteConfig.load();
+        PlatformEntrypoint.resendConfig(server);
     }
 
     public static Field getFieldByName(String paramName) {

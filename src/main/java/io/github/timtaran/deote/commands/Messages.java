@@ -49,6 +49,9 @@ public final class Messages {
     public static final Supplier<Component> VALUE_CHANGE_SUCCESS =
             () -> Component.literal("Value successfully updated.");
 
+    public static final Supplier<Component> CONFIG_RELOAD_SUCCESS =
+            () -> Component.literal("Configuration successfully reloaded.");
+
     public static final Supplier<Component> WRONG_ARGUMENTS =
             () -> Component.literal("Invalid command arguments.").withStyle(ChatFormatting.RED);
 
