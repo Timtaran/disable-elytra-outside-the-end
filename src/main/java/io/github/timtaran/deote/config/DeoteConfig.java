@@ -6,17 +6,16 @@ import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import io.github.timtaran.deote.GlobalStorage;
-import io.github.timtaran.deote.platform.PlatformEntrypoint;
 import io.github.timtaran.deote.util.TextUtils;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import io.github.timtaran.deote.commands.ConfigProvider;
 import io.github.timtaran.deote.util.DeoteIdentifier;
-import net.minecraft.client.Minecraft;
+// import net.minecraft.client.Minecraft;  // causes java.lang.RuntimeException: Cannot load class net.minecraft.client.server.IntegratedServer in environment type SERVER
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-// import net.minecraft.server.MinecraftServer;  // causes java.lang.RuntimeException: Cannot load class net.minecraft.client.server.IntegratedServer in environment type SERVER
+// import net.minecraft.server.MinecraftServer;
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
 //?} elif neoforge {

@@ -79,6 +79,7 @@ public class DeoteCommands {
     private static int setValue(CommandContext<CommandSourceStack> context) {
         try {
             ConfigProvider.setParamValue(
+                    context.getSource().getServer(),
                     StringArgumentType.getString(context, "param"),
                     StringArgumentType.getString(context, "value")
             );
@@ -94,6 +95,7 @@ public class DeoteCommands {
         ConfigProvider.getConfigInstance().dimensionList.add(StringArgumentType.getString(context, "dimension"));
         context.getSource().sendSuccess(Messages.VALUE_CHANGE_SUCCESS, false);
         ConfigProvider.save();
+        ConfigProvider.reload(context.getSource().getServer());
         return 1;
     }
 
@@ -108,6 +110,7 @@ public class DeoteCommands {
         ConfigProvider.getConfigInstance().dimensionList.remove(dimension);
         context.getSource().sendSuccess(Messages.VALUE_CHANGE_SUCCESS, false);
         ConfigProvider.save();
+        ConfigProvider.reload(context.getSource().getServer());
         return 1;
     }
 

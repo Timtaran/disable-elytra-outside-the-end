@@ -23,7 +23,7 @@ public final class ConfigProvider {
     /**
      * Retrieves the current instance of the DeoteConfig class.
      * This method should be used only when you need to work with List param.
-     * Otherwise, use {@link ConfigProvider#getFieldByName(String)} and {@link ConfigProvider#setParamValue(String, Object)}.
+     * Otherwise, use {@link ConfigProvider#getFieldByName(String)} and {@link ConfigProvider#setParamValue(MinecraftServer, String, Object)}.
      *
      * @return the current DeoteConfig instance
      */
@@ -114,7 +114,7 @@ public final class ConfigProvider {
         );
     }
 
-    public static void setParamValue(String param, Object value)
+    public static void setParamValue(MinecraftServer server, String param, Object value)
             throws IllegalAccessException {
 
         Field field = getFieldByName(param);
@@ -127,6 +127,7 @@ public final class ConfigProvider {
         DisableElytraOutsideTheEnd.LOGGER.debug(convertedValue.toString());
         DisableElytraOutsideTheEnd.LOGGER.debug(convertedValue.getClass().getTypeName());
         save();
+        reload(server);
     }
 
     public static void save() {
