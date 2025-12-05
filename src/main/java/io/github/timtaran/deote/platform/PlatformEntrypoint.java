@@ -89,9 +89,12 @@ public class PlatformEntrypoint {
     public static void resendConfig(MinecraftServer server) {
 
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            if (!server.isSingleplayerOwner(player.getGameProfile())) {
+            //? if <1.21.9 {
+            if (!server.isSingleplayerOwner(player.getGameProfile()))
+            //?} else {
+            //if (!server.isSingleplayerOwner(player.nameAndId()))
+            //?}
                 sendConfigSyncPacket(player, DeoteConfig.getInstance());
-            }
         }
     }
 }

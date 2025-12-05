@@ -3,48 +3,22 @@ package io.github.timtaran.deote.commands;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.util.TextUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
 
 import java.util.function.Supplier;
 
 public final class Messages {
     public static final Supplier<Component> HELP_COMMAND = () ->
             Component.literal("Available commands:\n")
-                    .append(Component.literal(" /deote help").withStyle(ChatFormatting.ITALIC).withStyle(s -> s
-                                    .withClickEvent(new ClickEvent(
-                                            ClickEvent.Action.SUGGEST_COMMAND,
-                                            "/deote help"
-                                    ))
-                                    .withHoverEvent(new HoverEvent(
-                                            HoverEvent.Action.SHOW_TEXT,
-                                            Component.literal("/deote help")
-                                    ))
-                            ))
-                            .append(" - shows this help message\n")
-                            .append(Component.literal(" /deote reload").withStyle(ChatFormatting.ITALIC).withStyle(s -> s
-                                            .withClickEvent(new ClickEvent(
-                                                    ClickEvent.Action.SUGGEST_COMMAND,
-                                                    "/deote reload"
-                                            ))
-                                            .withHoverEvent(new HoverEvent(
-                                                    HoverEvent.Action.SHOW_TEXT,
-                                                    Component.literal("/deote reload")
-                                            ))
-                                    ))
-                                    .append(" - reloads the config and syncs it to all clients\n")
-                                    .append(Component.literal(" /deote config").withStyle(ChatFormatting.ITALIC).withStyle(s -> s
-                                            .withClickEvent(new ClickEvent(
-                                                    ClickEvent.Action.SUGGEST_COMMAND,
-                                                    "/deote config"
-                                            ))
-                                            .withHoverEvent(new HoverEvent(
-                                                    HoverEvent.Action.SHOW_TEXT,
-                                                    Component.literal("/deote config")
-                                            ))
-                                    ))
-                                    .append(" - config-related commands");
+                    .append(Component.literal(" /deote help").withStyle(ChatFormatting.ITALIC)
+                            .withStyle(s -> TextUtils.styleCommandText(s, "/deote help", "/deote help")))
+                    .append(" - shows this help message\n")
+                    .append(Component.literal(" /deote reload").withStyle(ChatFormatting.ITALIC)
+                            .withStyle(s -> TextUtils.styleCommandText(s, "/deote reload", "/deote reload")))
+                    .append(" - reloads the config and syncs it to all clients\n")
+                    .append(Component.literal(" /deote config").withStyle(ChatFormatting.ITALIC)
+                            .withStyle(s -> TextUtils.styleCommandText(s, "/deote config", "/deote config")))
+                    .append(" - config-related commands");
 
     public static final Supplier<Component> VALUE_CHANGE_SUCCESS =
             () -> Component.literal("Value successfully updated.");
@@ -86,29 +60,11 @@ public final class Messages {
                 .append("\nYou can change a config value with:\n")
                 .append(Component.literal(" /deote config set <param> <value>\n")
                         .withStyle(ChatFormatting.ITALIC)
-                        .withStyle(s -> s
-                                .withClickEvent(new ClickEvent(
-                                        ClickEvent.Action.SUGGEST_COMMAND,
-                                        "/deote config set "
-                                ))
-                                .withHoverEvent(new HoverEvent(
-                                        HoverEvent.Action.SHOW_TEXT,
-                                        Component.literal("/deote config set")
-                                ))
-                        ))
+                        .withStyle(s -> TextUtils.styleCommandText(s, "/deote config set ", "/deote config set")))
                 .append("Or edit the dimension list with:\n")
                 .append(Component.literal(" /deote config dimension_list <add/remove> <dimension_name>")
                         .withStyle(ChatFormatting.ITALIC)
-                        .withStyle(s -> s
-                                .withClickEvent(new ClickEvent(
-                                        ClickEvent.Action.SUGGEST_COMMAND,
-                                        "/deote config dimension_list "
-                                ))
-                                .withHoverEvent(new HoverEvent(
-                                        HoverEvent.Action.SHOW_TEXT,
-                                        Component.literal("/deote config dimension_list")
-                                ))
-                        ));
+                        .withStyle(s -> TextUtils.styleCommandText(s, "/deote config dimension_list ", "/deote config dimension_list")));
 
         return message;
     }

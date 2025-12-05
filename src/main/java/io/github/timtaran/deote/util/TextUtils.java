@@ -2,7 +2,10 @@ package io.github.timtaran.deote.util;
 
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.Style;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,5 +30,28 @@ public class TextUtils {
         return Arrays.stream(s.split(","))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static Style styleCommandText(Style style, String commandText, String shownText) {
+        //? if <1.21.7 {
+        return style.withClickEvent(
+                        new ClickEvent(
+                                ClickEvent.Action.SUGGEST_COMMAND,
+                                commandText
+                        ))
+                .withHoverEvent(
+                        new HoverEvent(
+                                HoverEvent.Action.SHOW_TEXT,
+                                Component.literal(shownText))
+                );
+        //?} else {
+        /*return style.withClickEvent(
+                        new ClickEvent.SuggestCommand(
+                                commandText
+                        ))
+                .withHoverEvent(
+                        new HoverEvent.ShowText(
+                                Component.literal(shownText)));
+        *///?}
     }
 }
