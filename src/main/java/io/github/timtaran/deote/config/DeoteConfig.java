@@ -5,7 +5,6 @@ import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
-import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.platform.PlatformEntrypoint;
 import io.github.timtaran.deote.util.TextUtils;
@@ -16,11 +15,11 @@ import io.github.timtaran.deote.commands.ConfigProvider;
 import io.github.timtaran.deote.util.DeoteIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
-        //?} elif neoforge {
+//?} elif neoforge {
 /*import net.neoforged.fml.loading.FMLPaths;
  *///?}
 
@@ -77,7 +76,7 @@ public class DeoteConfig {
     }
 
     public static void save() {
-        IntegratedServer server = Minecraft.getInstance().getSingleplayerServer();
+        MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
 
         if (server != null) {
             PlatformEntrypoint.resendConfig(server);

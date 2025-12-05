@@ -8,10 +8,12 @@ since v2.0:
 - Firework boosting can be disabled instead of full flight block
 - Mod is **not** version-agnostic now
 
+since v2.2:
+- `dimension_list` added to configure dimensions where mod works
+- `/deote` command added to modify config in-game
+
 TODO:
-- [ ] Reload config command (no need to restart server)
 - [ ] Spigot/Paper plugin (why not)
-- [ ] Custom dimensions list
 
 > I'm not planning to backport mod to <1.21.1, since networking got changed and I don't want to get into it.
 > 
