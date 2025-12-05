@@ -7,26 +7,16 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
-import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.Supplier;
 
-import static io.github.timtaran.deote.commands.Messages.WRONG_ARGUMENTS;
 import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
 
-final class Messages {
-    public static final Supplier<Component> VALUE_CHANGE_SUCCESS =
-            () -> Component.literal("Successfully changed value.");
-    public static final Supplier<Component> WRONG_ARGUMENTS =
-            () -> Component.literal("Wrong arguments passed to command.").withStyle(ChatFormatting.RED);
-}
 
 public class DeoteCommands {
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_PARAM_NAME =
@@ -96,7 +86,7 @@ public class DeoteCommands {
             context.getSource().sendSuccess(Messages.VALUE_CHANGE_SUCCESS, false);
         } catch (IllegalAccessException e) {
             DisableElytraOutsideTheEnd.LOGGER.error(e.getMessage());
-            context.getSource().sendSuccess(WRONG_ARGUMENTS, false);
+            context.getSource().sendSuccess(Messages.WRONG_ARGUMENTS, false);
         }
         return 1;
     }
@@ -112,7 +102,7 @@ public class DeoteCommands {
         String dimension = StringArgumentType.getString(context, "dimension");
 
         if (!ConfigProvider.getConfigInstance().dimensionList.contains(dimension)) {
-            context.getSource().sendSuccess(WRONG_ARGUMENTS, false);
+            context.getSource().sendSuccess(Messages.WRONG_ARGUMENTS, false);
             return 0;
         }
 
@@ -127,10 +117,18 @@ public class DeoteCommands {
                 Commands.literal("deote")
                         .requires(source -> source.hasPermission(2))
 
-                        .executes(ctx -> {
-                            // TODO add help command (also print on `/deote`)
-                            return Command.SINGLE_SUCCESS;
+                        .executes(context -> {
+                            context.getSource().sendSuccess(Messages.HELP_COMMAND, false);
+                            return 1;
                         })
+
+                        .then(Commands.literal("help")
+                                .executes(
+                                        context -> {
+                                            context.getSource().sendSuccess(Messages.HELP_COMMAND, false);
+                                            return 1;
+                                        }
+                                ))
 
                         .then(Commands.literal("reload")
                                 .executes(ctx -> {
@@ -140,9 +138,9 @@ public class DeoteCommands {
                         )
 
                         .then(Commands.literal("config")
-                                .executes(ctx -> {
-                                    // TODO print current config
-                                    return Command.SINGLE_SUCCESS;
+                                .executes(context -> {
+                                    context.getSource().sendSuccess(Messages.CONFIG_MESSAGE, false);
+                                    return 1;
                                 })
 
                                 .then(Commands.literal("set")

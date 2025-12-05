@@ -22,9 +22,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DeoteConfig {
     private static final WorkingMode DEFAULT_WORKING_MODE = WorkingMode.FLYING;
@@ -68,17 +66,6 @@ public class DeoteConfig {
         //?} elif neoforge {
         /*return FMLPaths.CONFIGDIR.get();
          *///?}
-    }
-
-    private static String joinDimensionList(List<String> list) {
-        return list == null ? "" : String.join(",", list);
-    }
-
-    private static ArrayList<String> parseDimensionString(String s) {
-        if (s == null || s.isBlank()) return new ArrayList<>();
-        return Arrays.stream(s.split(","))
-                .map(String::trim)
-                .filter(x -> !x.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static DeoteConfig getInstance() {
@@ -160,9 +147,9 @@ public class DeoteConfig {
                                                 .name(TextUtils.translatable("config.groups.main.dimensions.list"))
                                                 .description(OptionDescription.of(TextUtils.translatable("config.groups.main.dimensions.list.description")))
                                                 .binding(
-                                                        joinDimensionList(DEFAULT_DIMENSION_LIST),
-                                                        () -> joinDimensionList(this.dimensionList),
-                                                        newVal -> this.dimensionList = parseDimensionString(newVal)
+                                                        TextUtils.listToString(DEFAULT_DIMENSION_LIST),
+                                                        () -> TextUtils.listToString(this.dimensionList),
+                                                        newVal -> this.dimensionList = TextUtils.stringToList(newVal)
                                                 )
                                                 .controller(StringControllerBuilder::create)
                                                 .build()
