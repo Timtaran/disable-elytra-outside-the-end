@@ -87,8 +87,11 @@ public class PlatformEntrypoint {
 *///?}
 
     public static void resendConfig(MinecraftServer server) {
+
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            sendConfigSyncPacket(player, DeoteConfig.getInstance());
+            if (!server.isSingleplayerOwner(player.getGameProfile())) {
+                sendConfigSyncPacket(player, DeoteConfig.getInstance());
+            }
         }
     }
 }
