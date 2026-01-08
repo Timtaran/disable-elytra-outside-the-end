@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.platform;
 
 import io.github.timtaran.deote.GlobalStorage;
@@ -11,6 +17,11 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
 
 
+/**
+ * Fabric client entrypoint.
+ *
+ * @author timtaran
+ */
 public class PlatformClientEntrypoint implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
@@ -52,6 +63,11 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 
 
+/^*
+ * NeoForge client entrypoint.
+ *
+ * @author timtaran
+ ^/
 @Mod(value = DisableElytraOutsideTheEnd.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = DisableElytraOutsideTheEnd.MOD_ID, value = Dist.CLIENT)
 public class PlatformClientEntrypoint {

@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.platform;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
@@ -26,6 +32,11 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 *///?}
 
+/**
+ * Platform-specific entrypoint for the mod.
+ *
+ * @author timtaran
+ */
 //? if fabric {
 public class PlatformEntrypoint implements ModInitializer {
     @Override
@@ -86,14 +97,18 @@ public class PlatformEntrypoint {
 
 *///?}
 
+    /**
+     * Resends the configuration to all players on the server, excluding the singleplayer owner.
+     * @param server the Minecraft server instance
+     */
     public static void resendConfig(MinecraftServer server) {
 
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             //? if <1.21.9 {
             if (!server.isSingleplayerOwner(player.getGameProfile()))
             //?} else {
-            //if (!server.isSingleplayerOwner(player.nameAndId()))
-            //?}
+            /*if (!server.isSingleplayerOwner(player.nameAndId()))
+            *///?}
                 sendConfigSyncPacket(player, DeoteConfig.getInstance());
         }
     }

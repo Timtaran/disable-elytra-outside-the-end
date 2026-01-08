@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.net.packet;
 
 import com.google.gson.Gson;
@@ -10,6 +16,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Server-to-client packet for syncing config.
+ *
+ * @author timtaran
+ */
 public record ConfigSyncS2CPacket(DeoteConfig config) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<ConfigSyncS2CPacket> TYPE =

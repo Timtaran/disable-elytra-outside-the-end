@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.util;
 
 
@@ -12,6 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A utility class for text-related operations.
+ *
+ * @author timtaran
+ */
 public class TextUtils {
     public static Component translatable(String key) {
         return Component.translatable(DisableElytraOutsideTheEnd.MOD_ID + "." + key);

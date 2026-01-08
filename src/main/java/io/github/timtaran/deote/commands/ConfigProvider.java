@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.commands;
 
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
@@ -11,11 +17,21 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * A provider class for accessing and modifying DeoteConfig parameters.
+ *
+ * @author timtaran
+ */
 public final class ConfigProvider {
     private static final Map<String, Field> PARAMS = scanParams();
 
     private static DeoteConfig config;
 
+    /**
+     * Sets the current instance of the DeoteConfig class.
+     *
+     * @param cfg the DeoteConfig instance to set
+     */
     public static void setConfigInstance(DeoteConfig cfg) {
         config = cfg;
     }
@@ -34,6 +50,12 @@ public final class ConfigProvider {
     private ConfigProvider() {
     }
 
+    /**
+     * Scans the DeoteConfig class for fields annotated with @SerialEntry
+     * and returns a map of parameter names to their corresponding Field objects.
+     *
+     * @return a map of parameter names to Field objects
+     */
     private static Map<String, Field> scanParams() {
         Map<String, Field> map = new LinkedHashMap<>();
         for (Field f : DeoteConfig.class.getDeclaredFields()) {
@@ -44,10 +66,21 @@ public final class ConfigProvider {
         return map;
     }
 
+    /**
+     * Retrieves a collection of all parameter names in the DeoteConfig class.
+     *
+     * @return a collection of parameter names
+     */
     public static Collection<String> getAllParams() {
         return new ArrayList<>(PARAMS.keySet());
     }
 
+    /**
+     * Retrieves possible values for a given parameter in the DeoteConfig class.
+     *
+     * @param param the name of the parameter
+     * @return a collection of possible values for the parameter
+     */
     public static Collection<String> getParamValues(String param) {
         if (param == null) return Collections.emptyList();
         Field field = getFieldByName(param);
@@ -114,6 +147,14 @@ public final class ConfigProvider {
         );
     }
 
+    /**
+     * Sets the value of a given parameter in the DeoteConfig class.
+     *
+     * @param server the Minecraft server instance
+     * @param param  the name of the parameter to set
+     * @param value  the new value for the parameter
+     * @throws IllegalAccessException if the field cannot be accessed
+     */
     public static void setParamValue(MinecraftServer server, String param, Object value)
             throws IllegalAccessException {
 
@@ -130,15 +171,30 @@ public final class ConfigProvider {
         reload(server);
     }
 
+    /**
+     * Saves the current DeoteConfig instance to persistent storage.
+     */
     public static void save() {
         DeoteConfig.save();
     }
 
+    /**
+     * Reloads the DeoteConfig from persistent storage and
+     * resends the updated configuration to all players on the server.
+     *
+     * @param server the Minecraft server instance
+     */
     public static void reload(MinecraftServer server) {
         DeoteConfig.load();
         PlatformEntrypoint.resendConfig(server);
     }
 
+    /**
+     * Retrieves the Field object for a given parameter name in the DeoteConfig class.
+     *
+     * @param paramName the name of the parameter
+     * @return the Field object for the parameter, or null if not found
+     */
     public static Field getFieldByName(String paramName) {
         return PARAMS.get(paramName);
     }

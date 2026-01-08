@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.mixin;
 
 import io.github.timtaran.deote.GlobalStorage;
@@ -21,6 +27,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
+/**
+ * Mixin to prevent client-side flying when disabled by the mod config.
+ *
+ * @author timtaran
+ */
 @Mixin(Player.class)
 public abstract class PreventClientFlyingMixin {
     //? if >=1.21.4 {
@@ -28,6 +39,12 @@ public abstract class PreventClientFlyingMixin {
     protected abstract boolean canGlide();
     //?}
 
+    /**
+     * Injects into the tryToStartFallFlying method to prevent fall flying
+     * based on the mod configuration.
+     *
+     * @param callbackInfo the callback info
+     */
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
     private void onTryToStartFallFlying(CallbackInfoReturnable<Boolean> callbackInfo) {
         Player self = (Player) (Object) this;
@@ -42,6 +59,12 @@ public abstract class PreventClientFlyingMixin {
         }
     }
 
+    /**
+     * Checks if the player can start fall flying.
+     *
+     * @param self the player
+     * @return true if the player can start fall flying, false otherwise
+     */
     @Unique
     private boolean canFallFlying(Player self) {
         //? if 1.21.1 {

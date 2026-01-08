@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.commands;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
@@ -7,6 +13,11 @@ import net.minecraft.network.chat.Component;
 
 import java.util.function.Supplier;
 
+/**
+ * A class containing various command messages.
+ *
+ * @author timtaran
+ */
 public final class Messages {
     public static final Supplier<Component> HELP_COMMAND = () ->
             Component.literal("Available commands:\n")

@@ -62,6 +62,7 @@ modstitch {
                 "1.21.4" -> 46
                 "1.21.8" -> 64
                 "1.21.10" -> 69
+                "1.21.11" -> 75
                 else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
             }.toString())
             put("yacl_version", "${property("deps.yacl")}-${loader}")

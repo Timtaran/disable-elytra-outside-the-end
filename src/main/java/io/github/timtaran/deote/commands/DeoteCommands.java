@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -17,6 +23,11 @@ import java.util.Collection;
 import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
 
 
+/**
+ * Class responsible for registering and handling Deote mod commands.
+ *
+ * @author timtaran
+ */
 public class DeoteCommands {
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_PARAM_NAME =
             (CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) -> {
@@ -68,6 +79,12 @@ public class DeoteCommands {
                 return builder.buildFuture();
             };
 
+    /**
+     * Retrieves all dimension identifiers from the Minecraft server.
+     *
+     * @param minecraftServer the Minecraft server instance
+     * @return a collection of dimension identifiers
+     */
     private static Collection<String> getAllDimensions(MinecraftServer minecraftServer) {
         Collection<String> dimensions = new ArrayList<>();
         for (ServerLevel level : minecraftServer.getAllLevels()) {
@@ -76,6 +93,12 @@ public class DeoteCommands {
         return dimensions;
     }
 
+    /**
+     * Sets the value of a configuration parameter.
+     *
+     * @param context the command context
+     * @return command result code
+     */
     private static int setValue(CommandContext<CommandSourceStack> context) {
         try {
             ConfigProvider.setParamValue(
@@ -91,6 +114,12 @@ public class DeoteCommands {
         return 1;
     }
 
+    /**
+     * Adds a dimension to the configuration's dimension list.
+     *
+     * @param context the command context
+     * @return command result code
+     */
     private static int addDimension(CommandContext<CommandSourceStack> context) {
         ConfigProvider.getConfigInstance().dimensionList.add(StringArgumentType.getString(context, "dimension"));
         context.getSource().sendSuccess(Messages.VALUE_CHANGE_SUCCESS, false);
@@ -99,6 +128,12 @@ public class DeoteCommands {
         return 1;
     }
 
+    /**
+     * Removes a dimension from the configuration's dimension list.
+     *
+     * @param context the command context
+     * @return command result code
+     */
     private static int removeDimension(CommandContext<CommandSourceStack> context) {
         String dimension = StringArgumentType.getString(context, "dimension");
 
@@ -114,6 +149,12 @@ public class DeoteCommands {
         return 1;
     }
 
+    /**
+     * Reloads the mod configuration.
+     *
+     * @param context the command context
+     * @return command result code
+     */
     private static int reloadConfig(CommandContext<CommandSourceStack> context) {
         ConfigProvider.reload(context.getSource().getServer());
         context.getSource().sendSuccess(Messages.CONFIG_RELOAD_SUCCESS, false);
@@ -121,6 +162,11 @@ public class DeoteCommands {
         return 1;
     }
 
+    /**
+     * Registers the Deote mod commands with the command dispatcher.
+     *
+     * @param dispatcher the command dispatcher
+     */
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("deote")

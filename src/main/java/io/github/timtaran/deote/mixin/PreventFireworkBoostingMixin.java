@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.mixin;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
@@ -20,8 +26,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
+/**
+ * Mixin to prevent firework boosting when disabled by the mod config.
+ *
+ * @author timtaran
+ */
 @Mixin(value = FireworkRocketItem.class)
 public class PreventFireworkBoostingMixin {
+    /**
+     * Injects into the use method to prevent firework boosting
+     * based on the mod configuration.
+     *
+     * @param level           the level
+     * @param player          the player
+     * @param interactionHand the interaction hand
+     * @param callbackInfo    the callback info
+     */
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void init(
             Level level,

@@ -1,3 +1,9 @@
+/*
+ * This file is part of Disable Elytra Outside The End.
+ * Licensed under LGPL 3.0.
+ *
+ * Copyright (c) 2025 timtaran
+ */
 package io.github.timtaran.deote.mixin;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
@@ -12,8 +18,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
+/**
+ * Mixin to prevent server-side flying when disabled by the mod config.
+ *
+ * @author timtaran
+ */
 @Mixin(value = LivingEntity.class)
 public abstract class PreventServerFlyingMixin {
+    /**
+     * Injects into the updateFallFlying method to prevent fall flying
+     * based on the mod configuration.
+     *
+     * @param callbackInfo the callback info
+     */
     @Inject(
             method = "updateFallFlying",
             at = @At("HEAD"),
