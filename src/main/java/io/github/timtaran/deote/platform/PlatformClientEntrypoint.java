@@ -9,7 +9,6 @@ package io.github.timtaran.deote.platform;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.DeoteConfig;
 
-
 //? if fabric {
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;

@@ -27,13 +27,7 @@ public final class ConfigProvider {
 
     private static DeoteConfig config;
 
-    /**
-     * Sets the current instance of the DeoteConfig class.
-     *
-     * @param cfg the DeoteConfig instance to set
-     */
-    public static void setConfigInstance(DeoteConfig cfg) {
-        config = cfg;
+    private ConfigProvider() {
     }
 
     /**
@@ -47,7 +41,13 @@ public final class ConfigProvider {
         return config;
     }
 
-    private ConfigProvider() {
+    /**
+     * Sets the current instance of the DeoteConfig class.
+     *
+     * @param cfg the DeoteConfig instance to set
+     */
+    public static void setConfigInstance(DeoteConfig cfg) {
+        config = cfg;
     }
 
     /**
