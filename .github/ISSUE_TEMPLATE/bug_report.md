@@ -24,8 +24,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Minecraft installation data:**
  - Version [e.g. 1.21.1]
- - Mod Loader [e.g. neoforge]
- - Version [e.g. 21.1.217]
+ - Mod Loader [e.g. neoforge 21.1.217]
+ - Mod version [e.g. 2.2.0]
 
 **Additional context**
 Add any other context about the problem here. (e.g. other installed mods)
