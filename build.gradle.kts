@@ -4,7 +4,7 @@ fun String.capitalized() =
     replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.7.1-unstable"
+    id("dev.isxander.modstitch.base") version "0.8.2"
 
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
@@ -46,9 +46,12 @@ modstitch {
         modAuthor = property("mod.metadata.author") as String
         modLicense = property("mod.metadata.license") as String
 
-        fun <K, V> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
+        fun <K : Any, V : Any> MapProperty<K, V>.populate(
+            block: MapProperty<K, V>.() -> Unit
+        ) {
             block()
         }
+
 
         replacementProperties.populate {
             // You can put any other replacement properties/metadata here that
