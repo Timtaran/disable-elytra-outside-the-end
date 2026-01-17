@@ -51,7 +51,7 @@ public class PlatformClientEntrypoint implements ClientModInitializer {
 
         ClientPlayConnectionEvents.DISCONNECT.register(
                 (phase, listener) -> {
-                    onPlayerDisconnect();
+                    onClientDisconnect();
                 }
 
         );
