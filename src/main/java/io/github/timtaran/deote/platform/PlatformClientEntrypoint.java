@@ -18,13 +18,23 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
-
+//?} elif neoforge {
+/*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
+*///?}
 
 /**
- * Fabric client entrypoint.
+ * Platform-specific client entrypoint for the mod.
  *
  * @author timtaran
  */
+//? if fabric {
 public class PlatformClientEntrypoint implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
@@ -36,40 +46,19 @@ public class PlatformClientEntrypoint implements ClientModInitializer {
         );
 
         ClientPlayConnectionEvents.INIT.register((phase, listener) -> {
-            if (!listener.hasSingleplayerServer()) {
-                if (!GlobalStorage.isGotSyncPacket) {
-                    GlobalStorage.setNullConfig();
-                }
-                GlobalStorage.isConnectedToServer = true;
-            }
+            onClientConnect();
         });
 
         ClientPlayConnectionEvents.DISCONNECT.register(
                 (phase, listener) -> {
-                    DeoteConfig.updateStorage();
-                    GlobalStorage.isGotSyncPacket = false;
-                    GlobalStorage.isConnectedToServer = false;
+                    onPlayerDisconnect();
                 }
 
         );
     }
 //?} elif neoforge {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 
-
-/^*
- * NeoForge client entrypoint.
- *
- * @author timtaran
- ^/
-@Mod(value = DisableElytraOutsideTheEnd.MOD_ID, dist = Dist.CLIENT)
+/*@Mod(value = DisableElytraOutsideTheEnd.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = DisableElytraOutsideTheEnd.MOD_ID, value = Dist.CLIENT)
 public class PlatformClientEntrypoint {
     public PlatformClientEntrypoint() {
@@ -81,6 +70,16 @@ public class PlatformClientEntrypoint {
 
     @SubscribeEvent
     public static void onClientConnect(ClientPlayerNetworkEvent.LoggingIn event) {
+        onClientConnect();
+    }
+
+    @SubscribeEvent
+    public static void onClientDisconnect(ClientPlayerNetworkEvent.LoggingOut event) {
+        onClientDisconnect();
+    }
+*///?}
+
+    public static void onClientConnect() {
         if (!Minecraft.getInstance().hasSingleplayerServer()) {
             if (!GlobalStorage.isGotSyncPacket) {
                 GlobalStorage.setNullConfig();
@@ -89,13 +88,11 @@ public class PlatformClientEntrypoint {
         }
     }
 
-    @SubscribeEvent
-    public static void onClientDisconnect(ClientPlayerNetworkEvent.LoggingOut event) {
+    public static void onClientDisconnect() {
         DeoteConfig.updateStorage();
         GlobalStorage.isGotSyncPacket = false;
         GlobalStorage.isConnectedToServer = false;
     }
-*///?}
 
     /**
      * Resends the configuration to all players on the local server. {@link PlatformEntrypoint#resendConfig(MinecraftServer)}
