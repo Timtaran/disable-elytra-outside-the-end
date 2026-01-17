@@ -55,7 +55,7 @@ public abstract class PreventClientFlyingMixin {
                          !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())
                         //?} else {
                         /*!GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().identifier().toString())
-                        *///? }
+                        *///?}
         ) {
             if (GlobalStorage.deoteConfig.warningMessageEnabled) {
                 Minecraft.getInstance().gui.setOverlayMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), false);

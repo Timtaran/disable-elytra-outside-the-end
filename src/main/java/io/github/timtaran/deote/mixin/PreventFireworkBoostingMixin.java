@@ -60,7 +60,7 @@ public class PreventFireworkBoostingMixin {
                          !GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().location().toString())
                         //?} else {
                         /*!GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().identifier().toString())
-                        *///? }
+                        *///?}
                 ) {
                     if (player.isFallFlying()) {
                         //? if 1.21.1 {

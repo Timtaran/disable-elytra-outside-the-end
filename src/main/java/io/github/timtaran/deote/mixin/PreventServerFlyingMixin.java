@@ -48,7 +48,7 @@ public abstract class PreventServerFlyingMixin {
                          !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())
                         //?} else {
                         /*!GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().identifier().toString())
-                        *///? }
+                        *///?}
                 ) {
                     if (GlobalStorage.deoteConfig.warningMessageEnabled && self instanceof ServerPlayer player && player.isFallFlying()) {
                         player.displayClientMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), true);

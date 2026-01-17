@@ -19,10 +19,10 @@ import net.minecraft.server.level.ServerLevel;
 
 //? if <=1.21.10 {
 import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
-//? } else {
+//?} else {
 /*import net.minecraft.server.permissions.Permissions;
 import org.apache.commons.lang3.Strings;
-*///? }
+*///?}
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -36,9 +36,9 @@ public class DeoteCommands {
     private static boolean startsWith(String str, String prefix) {
         //? if <=1.21.10 {
         return startsWithIgnoreCase(str, prefix);
-        //? } else {
+        //?} else {
         /*return Strings.CI.startsWith(str, prefix);
-        *///? }
+        *///?}
     }
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_PARAM_NAME =
             (CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) -> {
@@ -101,7 +101,7 @@ public class DeoteCommands {
         for (ServerLevel level : minecraftServer.getAllLevels()) {
             //? if <=1.21.10 {
              dimensions.add(level.dimension().location().toString());
-            //? } else {
+            //?} else {
             /*dimensions.add(level.dimension().identifier().toString());
             *///?}
         }
@@ -187,9 +187,9 @@ public class DeoteCommands {
                 Commands.literal("deote")
                         //? if <=1.21.10 {
                          .requires(source -> source.hasPermission(3))
-                        //? } else {
+                        //?} else {
                         /*.requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
-                        *///? }
+                        *///?}
 
                         .executes(context -> {
                             context.getSource().sendSuccess(Messages.HELP_COMMAND, false);

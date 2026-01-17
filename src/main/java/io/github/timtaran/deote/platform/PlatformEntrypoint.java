@@ -110,9 +110,9 @@ public class PlatformEntrypoint {
         /*return switch (
                 //? if <=1.21.8 {
                 FMLEnvironment.dist
-                //? } else {
+                //?} else {
                 /^FMLEnvironment.getDist()
-                ^///? }
+                ^///?}
                 ) {
             case CLIENT -> Dist.CLIENT;
             case DEDICATED_SERVER -> Dist.SERVER;
