@@ -49,7 +49,14 @@ public abstract class PreventClientFlyingMixin {
     private void onTryToStartFallFlying(CallbackInfoReturnable<Boolean> callbackInfo) {
         Player self = (Player) (Object) this;
 
-        if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING && canFallFlying(self) && !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())) {
+        if (
+                GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING && canFallFlying(self) &&
+                        //? if <= 1.21.10 {
+                         !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())
+                        //?} else {
+                        /*!GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().identifier().toString())
+                        *///? }
+        ) {
             if (GlobalStorage.deoteConfig.warningMessageEnabled) {
                 Minecraft.getInstance().gui.setOverlayMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), false);
             }
@@ -72,10 +79,10 @@ public abstract class PreventClientFlyingMixin {
         return !self.onGround() && !self.isFallFlying() && !self.isInWater() && !self.hasEffect(MobEffects.LEVITATION) &&
                 itemStack.is(Items.ELYTRA) &&
                 //? if fabric {
-                ElytraItem.isFlyEnabled(itemStack);
-                //?} elif neoforge {
-                /^itemStack.canElytraFly(self);
-                ^///?}
+                /^ElytraItem.isFlyEnabled(itemStack);
+                ^///?} elif neoforge {
+                itemStack.canElytraFly(self);
+                //?}
         *///?} elif >= 1.21.4 {
         return (!self.isFallFlying() && canGlide() && !self.isInWater());
         //?}

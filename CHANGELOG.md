@@ -1,3 +1,7 @@
+# v2.3.0
+- In-game LAN config reload via config screen is fixed
+- Added availability to configure allowed flight equipment
+
 # v2.2.0
 
 - Added in-game config reload (LAN + server command)

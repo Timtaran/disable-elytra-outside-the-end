@@ -161,9 +161,9 @@ publishMods {
     modLoaders.add(loader)
 
     fun getChangelogForVersion(changelogText: String, version: String): String? {
-        // looking for "# v2.1.0" or "# 2.1.0"
+        // looking for "# vX.Y.Z" or "# X.Y.Z"
         val escapedVersion = Regex.escape(version)
-        val regex = Regex("(?m)(?s)^#\\s*v?$escapedVersion\\s*\\r?\\n(.*?)(?=^#\\s*v?\\d|\\z)")
+        val regex = Regex("(?m)(?s)^(#\\s*v?$escapedVersion\\s*\\r?\\n.*?)(?=^#\\s*v?\\d|\\z)")
         return regex.find(changelogText)?.groups?.get(1)?.value?.trim()
     }
 

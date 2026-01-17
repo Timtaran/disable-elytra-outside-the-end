@@ -9,7 +9,7 @@ package io.github.timtaran.deote.util;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 //? if <=1.21.10 {
 import net.minecraft.resources.ResourceLocation;
-//?} else 1.21.11 {
+//?} else {
 /*import net.minecraft.resources.Identifier;
  *///?}
 

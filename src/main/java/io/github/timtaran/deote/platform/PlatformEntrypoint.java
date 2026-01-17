@@ -20,11 +20,13 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 //?} elif neoforge {
 /*import io.github.timtaran.deote.GlobalStorage;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -55,6 +57,7 @@ public class PlatformEntrypoint implements ModInitializer {
     public static void sendConfigSyncPacket(ServerPlayer player, DeoteConfig config) {
         ServerPlayNetworking.send(player, new ConfigSyncS2CPacket(config));
     }
+
 //?} elif neoforge {
 /*@Mod(DisableElytraOutsideTheEnd.MOD_ID)
 @EventBusSubscriber(modid = DisableElytraOutsideTheEnd.MOD_ID)
@@ -96,6 +99,26 @@ public class PlatformEntrypoint {
     }
 
 *///?}
+
+    public static Dist getDist() {
+        //? if fabric {
+        return switch (FabricLoader.getInstance().getEnvironmentType()) {
+            case CLIENT -> Dist.CLIENT;
+            case SERVER -> Dist.SERVER;
+        };
+        //?} elif neoforge {
+        /*return switch (
+                //? if <=1.21.8 {
+                FMLEnvironment.dist
+                //? } else {
+                /^FMLEnvironment.getDist()
+                ^///? }
+                ) {
+            case CLIENT -> Dist.CLIENT;
+            case DEDICATED_SERVER -> Dist.SERVER;
+        };
+        *///?}
+    }
 
     /**
      * Resends the configuration to all players on the server, excluding the singleplayer owner.

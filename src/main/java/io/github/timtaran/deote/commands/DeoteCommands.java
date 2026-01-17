@@ -17,10 +17,14 @@ import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 
+//? if <=1.21.10 {
+import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
+//? } else {
+/*import net.minecraft.server.permissions.Permissions;
+import org.apache.commons.lang3.Strings;
+*///? }
 import java.util.ArrayList;
 import java.util.Collection;
-
-import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
 
 
 /**
@@ -29,11 +33,18 @@ import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
  * @author timtaran
  */
 public class DeoteCommands {
+    private static boolean startsWith(String str, String prefix) {
+        //? if <=1.21.10 {
+        return startsWithIgnoreCase(str, prefix);
+        //? } else {
+        /*return Strings.CI.startsWith(str, prefix);
+        *///? }
+    }
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_PARAM_NAME =
             (CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) -> {
                 Collection<String> params = ConfigProvider.getAllParams();
                 for (String p : params) {
-                    if (startsWithIgnoreCase(p, builder.getRemaining())) builder.suggest(p);
+                    if (startsWith(p, builder.getRemaining())) builder.suggest(p);
                 }
                 return builder.buildFuture();
             };
@@ -44,7 +55,7 @@ public class DeoteCommands {
                     String param = StringArgumentType.getString(ctx, "param");
                     Collection<String> values = ConfigProvider.getParamValues(param);
                     for (String v : values) {
-                        if (startsWithIgnoreCase(v, builder.getRemaining())) builder.suggest(v);
+                        if (startsWith(v, builder.getRemaining())) builder.suggest(v);
                     }
                 } catch (IllegalArgumentException ex) {
                     DisableElytraOutsideTheEnd.LOGGER.debug(ex.getMessage());
@@ -57,7 +68,7 @@ public class DeoteCommands {
                 try {
                     Collection<String> values = getAllDimensions(ctx.getSource().getServer());
                     for (String v : values) {
-                        if (startsWithIgnoreCase(v, builder.getRemaining()) && !ConfigProvider.getConfigInstance().dimensionList.contains(v))
+                        if (startsWith(v, builder.getRemaining()) && !ConfigProvider.getConfigInstance().dimensionList.contains(v))
                             builder.suggest(v);
                     }
                 } catch (IllegalArgumentException ex) {
@@ -71,7 +82,7 @@ public class DeoteCommands {
                 try {
                     Collection<String> values = ConfigProvider.getConfigInstance().dimensionList;
                     for (String v : values) {
-                        if (startsWithIgnoreCase(v, builder.getRemaining())) builder.suggest(v);
+                        if (startsWith(v, builder.getRemaining())) builder.suggest(v);
                     }
                 } catch (IllegalArgumentException ex) {
                     DisableElytraOutsideTheEnd.LOGGER.debug(ex.getMessage());
@@ -88,7 +99,11 @@ public class DeoteCommands {
     private static Collection<String> getAllDimensions(MinecraftServer minecraftServer) {
         Collection<String> dimensions = new ArrayList<>();
         for (ServerLevel level : minecraftServer.getAllLevels()) {
-            dimensions.add(level.dimension().location().toString());
+            //? if <=1.21.10 {
+             dimensions.add(level.dimension().location().toString());
+            //? } else {
+            /*dimensions.add(level.dimension().identifier().toString());
+            *///?}
         }
         return dimensions;
     }
@@ -170,7 +185,11 @@ public class DeoteCommands {
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("deote")
-                        .requires(source -> source.hasPermission(2))
+                        //? if <=1.21.10 {
+                         .requires(source -> source.hasPermission(3))
+                        //? } else {
+                        /*.requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                        *///? }
 
                         .executes(context -> {
                             context.getSource().sendSuccess(Messages.HELP_COMMAND, false);

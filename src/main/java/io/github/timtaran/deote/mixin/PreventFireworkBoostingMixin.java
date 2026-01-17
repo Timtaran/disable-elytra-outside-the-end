@@ -55,7 +55,13 @@ public class PreventFireworkBoostingMixin {
     {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FIREWORKS) {
             try {
-                if (!GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().location().toString())) {
+                if (
+                        //? if <= 1.21.10 {
+                         !GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().location().toString())
+                        //?} else {
+                        /*!GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().identifier().toString())
+                        *///? }
+                ) {
                     if (player.isFallFlying()) {
                         //? if 1.21.1 {
                         /*callbackInfo.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));

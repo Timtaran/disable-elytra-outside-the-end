@@ -16,12 +16,14 @@ import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.commands.ConfigProvider;
+import io.github.timtaran.deote.platform.Dist;
+import io.github.timtaran.deote.platform.PlatformClientEntrypoint;
+import io.github.timtaran.deote.platform.PlatformEntrypoint;
 import io.github.timtaran.deote.util.DeoteIdentifier;
 import io.github.timtaran.deote.util.TextUtils;
-// import net.minecraft.client.Minecraft;  // causes java.lang.RuntimeException: Cannot load class net.minecraft.client.server.IntegratedServer in environment type SERVER
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-// import net.minecraft.server.MinecraftServer;
+
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
 //?} elif neoforge {
@@ -76,9 +78,9 @@ public class DeoteConfig {
     private static Path getConfigDirectory() {
         //? if fabric {
         return FabricLoader.getInstance().getConfigDir();
-        //?} elif neoforge {
+         //?} elif neoforge {
         /*return FMLPaths.CONFIGDIR.get();
-         *///?}
+        *///?}
     }
 
     /**
@@ -94,12 +96,9 @@ public class DeoteConfig {
      * Saves the config and updates the global storage.
      */
     public static void save() {
-        /*MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
-        if (server != null) {
-            PlatformEntrypoint.resendConfig(server);
+        if (PlatformEntrypoint.getDist() == Dist.CLIENT) {
+            PlatformClientEntrypoint.resendConfig();
         }
-        */
-
         HANDLER.save();
         updateStorage();
     }

@@ -9,6 +9,10 @@ package io.github.timtaran.deote.platform;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.DeoteConfig;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
+
+
 //? if fabric {
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -49,10 +53,8 @@ public class PlatformClientEntrypoint implements ClientModInitializer {
 
         );
     }
-}
 //?} elif neoforge {
-/*import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
+/*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -93,6 +95,15 @@ public class PlatformClientEntrypoint {
         GlobalStorage.isGotSyncPacket = false;
         GlobalStorage.isConnectedToServer = false;
     }
-}
-
 *///?}
+
+    /**
+     * Resends the configuration to all players on the local server. {@link PlatformEntrypoint#resendConfig(MinecraftServer)}
+     */
+    public static void resendConfig() {
+        MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
+        if (server != null) {
+            PlatformEntrypoint.resendConfig(server);
+        }
+    }
+}

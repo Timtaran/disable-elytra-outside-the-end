@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05"; # update only after gradle gets java 25 support
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
   };
@@ -10,7 +10,7 @@
       systems = import inputs.systems;
 
       perSystem = { config, self', pkgs, lib, system, ... }: let
-        java = pkgs.jdk24;
+        java = pkgs.javaPackages.compiler.openjdk25;
 
         nativeBuildInputs = with pkgs; [
           java
@@ -19,7 +19,7 @@
 
         buildInputs = with pkgs; [
           libGL
-          glfw-wayland-minecraft # Renamed to glfw3-minecraft in 25.11. Not always needed, but in case it is, it's here.
+          glfw3-minecraft # Not always needed, but in case it is, it's here.
           flite # TTS
           libpulseaudio # Required for audio
         ];
