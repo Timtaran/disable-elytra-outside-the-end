@@ -9,8 +9,7 @@ package io.github.timtaran.deote.mixin;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.WorkingMode;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
+import io.github.timtaran.deote.util.ConfigHelper;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,17 +43,9 @@ public abstract class PreventServerFlyingMixin {
                 if (self.level().isClientSide()) return;
 
                 if (
-                        //? if <= 1.21.10 {
-                         !GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().location().toString())
-                        //?} else {
-                        /*!GlobalStorage.deoteConfig.dimensionList.contains(self.level().dimension().identifier().toString())
-                        *///?}
+                        !ConfigHelper.isAllowedDimension(GlobalStorage.deoteConfig, self.level())
                 ) {
-                    if (GlobalStorage.deoteConfig.warningMessageEnabled && self instanceof ServerPlayer player && player.isFallFlying()) {
-                        player.displayClientMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), true);
-                    }
-
-                    ((EntityMixin) self).invokeSetSharedFlag(7, false);
+                    ((EntityMixin) self).invokeSetSharedFlag(7, true); // PreventFallFlyingMixin sets it to false, so we set it to true here to display warning message and perform other checks
                     callbackInfo.cancel();
                 }
             } catch (Exception exception) {
