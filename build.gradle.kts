@@ -155,7 +155,7 @@ publishMods {
     file = modstitch.finalJarTask.flatMap { it.archiveFile }
 
     // friendly name shown in logs / UI
-    displayName = "[${loader.capitalized()}] ${modstitch.metadata.modName.get()} for $mcVersion"
+    displayName = "[${loader.capitalized()}] ${modstitch.metadata.modName.get()} $modMetaVersion for $mcVersion"
 
     // add loader tag (fabric/neoforge/etc)
     modLoaders.add(loader)
@@ -163,7 +163,7 @@ publishMods {
     fun getChangelogForVersion(changelogText: String, version: String): String? {
         // looking for "# vX.Y.Z" or "# X.Y.Z"
         val escapedVersion = Regex.escape(version)
-        val regex = Regex("(?m)(?s)^(#\\s*v?$escapedVersion\\s*\\r?\\n.*?)(?=^#\\s*v?\\d|\\z)")
+        val regex = Regex("(?m)(?s)^#\\s*v?$escapedVersion\\s*\\r?\\n(.*?)(?=^#\\s*v?\\d|\\z)")
         return regex.find(changelogText)?.groups?.get(1)?.value?.trim()
     }
 
