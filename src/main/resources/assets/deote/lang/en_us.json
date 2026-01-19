@@ -7,6 +7,8 @@
   "deote.config.groups.main.warning_message.description": "Whether the player should see a warning message on the action bar when an action is blocked",
   "deote.config.groups.main.flight_disabled_message": "Flight Disabled Message",
   "deote.config.groups.main.fireworks_disabled_message": "Fireworks Disabled Message",
+  "deote.config.groups.main.dimension.list": "Dimension List",
+  "deote.config.groups.main.item.list.description": "Allowed dimensions list",
   "deote.working_mode.none": "NONE",
   "deote.working_mode.fireworks": "FIREWORKS",
   "deote.working_mode.flying": "FLYING"
