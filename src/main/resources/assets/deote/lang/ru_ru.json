@@ -8,7 +8,7 @@
   "deote.config.groups.main.flight_disabled_message": "Сообщение о запрете полёта",
   "deote.config.groups.main.fireworks_disabled_message": "Сообщение о запрете фейерверков",
   "deote.config.groups.main.dimension.list": "Список измерений",
-  "deote.config.groups.main.item.list.description": "Список разрешённых измерений",
+  "deote.config.groups.main.dimension.list.description": "Список разрешённых измерений",
   "deote.working_mode.none": "ВЫКЛ",
   "deote.working_mode.fireworks": "ФЕЙРВЕРКИ",
   "deote.working_mode.flying": "ПОЛЁТ"
