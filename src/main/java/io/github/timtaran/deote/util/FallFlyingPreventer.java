@@ -37,7 +37,7 @@ public class FallFlyingPreventer {
                     /*ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
                     if (!itemStack.isEmpty()) {
                         if (ConfigHelper.isAllowedItem(itemStack))
-                            return;
+                            return false;
                     }
                     *///?} else {
             for (EquipmentSlot equipmentSlot : EquipmentSlot.VALUES) {
