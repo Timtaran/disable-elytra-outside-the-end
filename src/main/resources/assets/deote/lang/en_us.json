@@ -9,6 +9,8 @@
   "deote.config.groups.main.fireworks_disabled_message": "Fireworks Disabled Message",
   "deote.config.groups.main.dimension.list": "Dimension List",
   "deote.config.groups.main.dimension.list.description": "Allowed dimensions list",
+  "deote.config.groups.main.item.list": "Item list",
+  "deote.config.groups.main.item.list.description": "Allowed flight items list",
   "deote.working_mode.none": "NONE",
   "deote.working_mode.fireworks": "FIREWORKS",
   "deote.working_mode.flying": "FLYING"

@@ -9,7 +9,7 @@ package io.github.timtaran.deote.mixin;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.WorkingMode;
-import io.github.timtaran.deote.util.ConfigHelper;
+import io.github.timtaran.deote.util.FallFlyingPreventer;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(value = LivingEntity.class)
 public abstract class PreventServerFlyingMixin {
+    // In 1.21.1 `updateFallFlying` calls `setSharedFlag` every tick on server
+    //? if >=1.21.4 {
     /**
      * Injects into the updateFallFlying method to prevent fall flying
      * based on the mod configuration.
@@ -42,15 +44,15 @@ public abstract class PreventServerFlyingMixin {
             try {
                 if (self.level().isClientSide()) return;
 
-                if (
-                        !ConfigHelper.isAllowedDimension(GlobalStorage.deoteConfig, self.level())
-                ) {
-                    ((EntityMixin) self).invokeSetSharedFlag(7, true); // PreventFallFlyingMixin sets it to false, so we set it to true here to display warning message and perform other checks
+                if (FallFlyingPreventer.preventFallFlying(self)) {
+                    ((EntityMixin) self).invokeSetSharedFlag(7, false);
                     callbackInfo.cancel();
                 }
+
             } catch (Exception exception) {
                 DisableElytraOutsideTheEnd.LOGGER.error(exception.getMessage());
             }
         }
     }
+    //?}
 }

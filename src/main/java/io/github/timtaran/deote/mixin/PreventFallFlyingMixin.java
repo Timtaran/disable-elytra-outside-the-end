@@ -9,15 +9,14 @@ package io.github.timtaran.deote.mixin;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.WorkingMode;
-import io.github.timtaran.deote.util.ConfigHelper;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
+import io.github.timtaran.deote.util.FallFlyingPreventer;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 
 /**
  * Mixin for Entity to prevent fall flying.
@@ -29,6 +28,10 @@ public abstract class PreventFallFlyingMixin {
     @Shadow
     protected abstract void setSharedFlag(int flag, boolean value);
 
+    /**
+     * Injects into the setSharedFlag method to prevent fall flying
+     * based on the mod configuration.
+     */
     @Inject(method = "setSharedFlag", at = @At("HEAD"), cancellable = true)
     protected void deote$setSharedFlag(int flag, boolean value, CallbackInfo ci) {
         Entity self = (Entity) (Object) this;
@@ -38,11 +41,9 @@ public abstract class PreventFallFlyingMixin {
                     value &&
                             flag == 7 && // Fall flying flag
                             GlobalStorage.deoteConfig.workingMode == WorkingMode.FLYING &&
-                            !ConfigHelper.isAllowedDimension(GlobalStorage.deoteConfig, self.level())
+                            FallFlyingPreventer.preventFallFlying(self)
 
             ) {
-                if (GlobalStorage.deoteConfig.warningMessageEnabled && self instanceof ServerPlayer player)
-                    player.displayClientMessage(Component.literal(GlobalStorage.deoteConfig.flightDisabledMessage), true);
                 setSharedFlag(flag, false);
                 ci.cancel();
             }

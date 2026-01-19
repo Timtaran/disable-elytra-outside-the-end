@@ -9,7 +9,7 @@ package io.github.timtaran.deote.mixin;
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.GlobalStorage;
 import io.github.timtaran.deote.config.WorkingMode;
-import net.minecraft.network.chat.Component;
+import io.github.timtaran.deote.util.FallFlyingPreventer;
 import net.minecraft.world.InteractionHand;
 //? if 1.21.1 {
 /*import net.minecraft.world.InteractionResultHolder;
@@ -55,25 +55,13 @@ public class PreventFireworkBoostingMixin {
     {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FIREWORKS) {
             try {
-                if (
-                        //? if <= 1.21.10 {
-                         !GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().location().toString())
-                        //?} else {
-                        /*!GlobalStorage.deoteConfig.dimensionList.contains(level.dimension().identifier().toString())
-                        *///?}
-                ) {
+                if (FallFlyingPreventer.preventFallFlying(player)) {
                     if (player.isFallFlying()) {
                         //? if 1.21.1 {
                         /*callbackInfo.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));
                          *///?} elif >= 1.21.4 {
                         callbackInfo.setReturnValue(InteractionResult.PASS);
                         //?}
-
-                        if (GlobalStorage.deoteConfig.warningMessageEnabled) {
-                            if (!level.isClientSide()) {
-                                player.displayClientMessage(Component.literal(GlobalStorage.deoteConfig.fireworksDisabledMessage), true);
-                            }
-                        }
 
                         callbackInfo.cancel();
                     }

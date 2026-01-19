@@ -23,7 +23,7 @@ public class DeoteIdentifier {
     public static ResourceLocation get(String path) {
         return ResourceLocation.fromNamespaceAndPath(DisableElytraOutsideTheEnd.MOD_ID, path);
     }
-    //?} else 1.21.11 {
+    //?} else {
      /*public static Identifier get(String path) {
          return Identifier.fromNamespaceAndPath(DisableElytraOutsideTheEnd.MOD_ID, path);
      }

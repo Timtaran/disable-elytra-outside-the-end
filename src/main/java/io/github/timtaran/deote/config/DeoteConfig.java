@@ -42,6 +42,7 @@ import java.util.List;
 public class DeoteConfig {
     private static final WorkingMode DEFAULT_WORKING_MODE = WorkingMode.FLYING;
     private static final ArrayList<String> DEFAULT_DIMENSION_LIST = new ArrayList<>(List.of(new String[]{"minecraft:the_end"}));
+    private static final ArrayList<String> DEFAULT_ITEM_LIST = new ArrayList<>(List.of(new String[]{}));
     private static final boolean DEFAULT_WARNING_MESSAGE_ENABLED = true;
     private static final String DEFAULT_FLIGHT_DISABLED_MESSAGE = "§cThe atmosphere here is too dense to allow the wings to open";
     private static final String DEFAULT_FIREWORKS_DISABLED_MESSAGE = "§cIt's hard to light a fuse in flight";
@@ -58,6 +59,8 @@ public class DeoteConfig {
     public WorkingMode workingMode = DEFAULT_WORKING_MODE;
     @SerialEntry
     public ArrayList<String> dimensionList = DEFAULT_DIMENSION_LIST;  // currently - allowed dimensions, maybe I'll add blacklist in the future
+    @SerialEntry
+    public ArrayList<String> itemList = DEFAULT_ITEM_LIST; // same as dimensionList
     @SerialEntry
     public boolean warningMessageEnabled = DEFAULT_WARNING_MESSAGE_ENABLED;
     @SerialEntry
@@ -90,6 +93,14 @@ public class DeoteConfig {
      */
     public static DeoteConfig getInstance() {
         return HANDLER.instance();
+    }
+
+    public String getWarningMessage() {
+        return switch (this.workingMode) {
+            case FLYING -> this.flightDisabledMessage;
+            case FIREWORKS -> this.fireworksDisabledMessage;
+            default -> "";
+        };
     }
 
     /**
@@ -183,8 +194,8 @@ public class DeoteConfig {
                                 )
                                 .option(
                                         Option.<String>createBuilder()
-                                                .name(TextUtils.translatable("config.groups.main.dimensions.list"))
-                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.dimensions.list.description")))
+                                                .name(TextUtils.translatable("config.groups.main.dimension.list"))
+                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.dimension.list.description")))
                                                 .binding(
                                                         TextUtils.listToString(DEFAULT_DIMENSION_LIST),
                                                         () -> TextUtils.listToString(this.dimensionList),
@@ -193,7 +204,18 @@ public class DeoteConfig {
                                                 .controller(StringControllerBuilder::create)
                                                 .build()
                                 )
-
+                                .option(
+                                        Option.<String>createBuilder()
+                                                .name(TextUtils.translatable("config.groups.main.item.list"))
+                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.item.list.description")))
+                                                .binding(
+                                                        TextUtils.listToString(DEFAULT_ITEM_LIST),
+                                                        () -> TextUtils.listToString(this.itemList),
+                                                        newVal -> this.itemList = TextUtils.stringToList(newVal)
+                                                )
+                                                .controller(StringControllerBuilder::create)
+                                                .build()
+                                )
                                 .build()
                         )
                         .build())
