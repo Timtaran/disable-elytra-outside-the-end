@@ -17,11 +17,11 @@ import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 
-//? if <=1.21.10 {
-import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
-//?} else {
-/*import net.minecraft.server.permissions.Permissions;
+//? if >1.21.10 {
+import net.minecraft.server.permissions.Permissions;
 import org.apache.commons.lang3.Strings;
+//?} else {
+/*import static org.apache.commons.lang3.StringUtils.startsWithIgnoreCase;
 *///?}
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,10 +34,10 @@ import java.util.Collection;
  */
 public class DeoteCommands {
     private static boolean startsWith(String str, String prefix) {
-        //? if <=1.21.10 {
-        return startsWithIgnoreCase(str, prefix);
+        //? if >1.21.10 {
+        return Strings.CI.startsWith(str, prefix);
         //?} else {
-        /*return Strings.CI.startsWith(str, prefix);
+        /*return startsWithIgnoreCase(str, prefix);
         *///?}
     }
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_PARAM_NAME =
@@ -99,10 +99,10 @@ public class DeoteCommands {
     private static Collection<String> getAllDimensions(MinecraftServer minecraftServer) {
         Collection<String> dimensions = new ArrayList<>();
         for (ServerLevel level : minecraftServer.getAllLevels()) {
-            //? if <=1.21.10 {
-             dimensions.add(level.dimension().location().toString());
+            //? if >1.21.10 {
+             dimensions.add(level.dimension().identifier().toString());
             //?} else {
-            /*dimensions.add(level.dimension().identifier().toString());
+            /*dimensions.add(level.dimension().location().toString());
             *///?}
         }
         return dimensions;
@@ -185,10 +185,10 @@ public class DeoteCommands {
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("deote")
-                        //? if <=1.21.10 {
-                         .requires(source -> source.hasPermission(3))
+                        //? if >1.21.10 {
+                         .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
                         //?} else {
-                        /*.requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                        /*.requires(source -> source.hasPermission(3))
                         *///?}
 
                         .executes(context -> {

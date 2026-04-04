@@ -14,7 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-//? if neoforge && <= 1.21.4 {
+//? if neoforge && <= 1.21.4 && <26.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
 import io.github.timtaran.deote.compat.CuriosCompat;
 *///?}
@@ -49,7 +49,7 @@ public class FallFlyingPreventer {
             }
             //?}
 
-            //? if neoforge && <= 1.21.4 {
+            //? if neoforge && <= 1.21.4 && <26.1 {
             /*IItemHandler capability = livingEntity.getCapability(CuriosCompat.CURIOS_INVENTORY);
             if (capability != null) {
                 if (ConfigHelper.isAllowedItem(capability.getStackInSlot(1))) // chest
@@ -59,7 +59,7 @@ public class FallFlyingPreventer {
         }
 
         if (GlobalStorage.deoteConfig.warningMessageEnabled && entity instanceof ServerPlayer player)
-            player.displayClientMessage(Component.literal(warningMessage), true);
+            player.sendSystemMessage(Component.literal(warningMessage), true);
 
         return true;
     }

@@ -4,7 +4,7 @@ fun String.capitalized() =
     replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.8.2"
+    id("dev.isxander.modstitch.base") version "0.8.4"
 
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
@@ -28,7 +28,11 @@ modstitch {
 
     // Alternatively use stonecutter.eval if you have a lot of versions to target.
     // https://stonecutter.kikugie.dev/stonecutter/guide/setup#checking-versions
-    javaVersion = if (stonecutter.eval(mcVersion, ">1.20.4")) 21 else 17
+    javaVersion = when {
+        stonecutter.eval(mcVersion, ">=26.1") -> 25
+        stonecutter.eval(mcVersion, ">1.20.4") -> 21
+        else -> 17
+    }
 
     // If parchment doesn't exist for a version, yet you can safely
     // omit the "deps.parchment" property from your versioned gradle.properties
@@ -63,6 +67,7 @@ modstitch {
                 "1.21.8" -> 64
                 "1.21.10" -> 69
                 "1.21.11" -> 75
+                "26.1" -> 84
                 else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
             }.toString())
             put("yacl_version", "${property("deps.yacl")}-${loader}")
@@ -73,7 +78,7 @@ modstitch {
     loom {
         // It's not recommended to store the Fabric Loader version in properties.
         // Make sure it's up to date.
-        fabricLoaderVersion = "0.17.3"
+        fabricLoaderVersion = if (stonecutter.eval(mcVersion, ">=26.1")) "0.18.4" else "0.17.3"
 
         // Configure loom like normal in this block.
         configureLoom {

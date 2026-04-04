@@ -1,4 +1,4 @@
-//? if neoforge && <= 1.21.4 {
+//? if neoforge && <= 1.21.4 && <26.1 {
 /*package io.github.timtaran.deote.compat;
 
 import net.minecraft.resources.ResourceLocation;
