@@ -45,7 +45,11 @@ public class PlatformEntrypoint implements ModInitializer {
     public void onInitialize() {
         DisableElytraOutsideTheEnd.initialize();
 
-        PayloadTypeRegistry.playS2C().register(ConfigSyncS2CPacket.TYPE, ConfigSyncS2CPacket.STREAM_CODEC);
+        //? if <26.1 {
+        /*PayloadTypeRegistry.playS2C().register(ConfigSyncS2CPacket.TYPE, ConfigSyncS2CPacket.STREAM_CODEC);
+        *///?} else {
+        PayloadTypeRegistry.clientboundPlay().register(ConfigSyncS2CPacket.TYPE, ConfigSyncS2CPacket.STREAM_CODEC);
+        //?}
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
                 // Fabric server doesn't care if client doesn't have channel so we're not catching any exceptions here
@@ -128,10 +132,10 @@ public class PlatformEntrypoint {
 
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             //? if <1.21.9 {
-            if (!server.isSingleplayerOwner(player.getGameProfile()))
-            //?} else {
-            /*if (!server.isSingleplayerOwner(player.nameAndId()))
-            *///?}
+            /*if (!server.isSingleplayerOwner(player.getGameProfile()))
+            *///?} else {
+            if (!server.isSingleplayerOwner(player.nameAndId()))
+            //?}
                 sendConfigSyncPacket(player, DeoteConfig.getInstance());
         }
     }

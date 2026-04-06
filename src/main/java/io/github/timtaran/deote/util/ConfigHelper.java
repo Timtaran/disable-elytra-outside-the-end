@@ -27,10 +27,10 @@ public class ConfigHelper {
     public static boolean isAllowedDimension(DeoteConfig deoteConfig, Level level) {
         return deoteConfig.dimensionList.contains(
                 //? if <= 1.21.10 {
-                level.dimension().location().toString()
-                //?} else {
-                /*level.dimension().identifier().toString()
-                 *///?}
+                /*level.dimension().location().toString()
+                *///?} else {
+                level.dimension().identifier().toString()
+                 //?}
         );
     }
 

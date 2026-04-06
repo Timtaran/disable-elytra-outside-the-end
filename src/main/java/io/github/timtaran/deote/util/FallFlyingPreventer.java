@@ -59,7 +59,7 @@ public class FallFlyingPreventer {
         }
 
         if (GlobalStorage.deoteConfig.warningMessageEnabled && entity instanceof ServerPlayer player)
-            player.displayClientMessage(Component.literal(warningMessage), true);
+            player.sendSystemMessage(Component.literal(warningMessage), true);
 
         return true;
     }

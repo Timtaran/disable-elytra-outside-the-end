@@ -8,10 +8,10 @@ package io.github.timtaran.deote.util;
 
 import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 //? if <=1.21.10 {
-import net.minecraft.resources.ResourceLocation;
-//?} else {
-/*import net.minecraft.resources.Identifier;
- *///?}
+/*import net.minecraft.resources.ResourceLocation;
+*///?} else {
+import net.minecraft.resources.Identifier;
+ //?}
 
 /**
  * A utility class for creating mod-specific Identifiers.
@@ -20,12 +20,12 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class DeoteIdentifier {
     //? if <=1.21.10 {
-    public static ResourceLocation get(String path) {
+    /*public static ResourceLocation get(String path) {
         return ResourceLocation.fromNamespaceAndPath(DisableElytraOutsideTheEnd.MOD_ID, path);
     }
-    //?} else {
-     /*public static Identifier get(String path) {
+    *///?} else {
+     public static Identifier get(String path) {
          return Identifier.fromNamespaceAndPath(DisableElytraOutsideTheEnd.MOD_ID, path);
      }
-    *///?}
+    //?}
 }

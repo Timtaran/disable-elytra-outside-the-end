@@ -4,7 +4,7 @@ fun String.capitalized() =
     replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.8.2"
+    id("dev.isxander.modstitch.base") version "0.8.5"
 
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
@@ -28,13 +28,7 @@ modstitch {
 
     // Alternatively use stonecutter.eval if you have a lot of versions to target.
     // https://stonecutter.kikugie.dev/stonecutter/guide/setup#checking-versions
-    javaVersion = if (stonecutter.eval(mcVersion, ">1.20.4")) 21 else 17
-
-    // If parchment doesn't exist for a version, yet you can safely
-    // omit the "deps.parchment" property from your versioned gradle.properties
-    parchment {
-        prop("deps.parchment") { mappingsVersion = it }
-    }
+    javaVersion = if (stonecutter.eval(mcVersion, ">=26.1")) 25 else 21
 
     // This metadata is used to fill out the information inside
     // the metadata files found in the templates folder.
@@ -57,14 +51,17 @@ modstitch {
             // You can put any other replacement properties/metadata here that
             // modstitch doesn't initially support. Some examples below.
             put("mod_issue_tracker", property("mod.metadata.issue_tracker") as String)
-            put("pack_format", when (property("deps.minecraft")) {
-                "1.21.1" -> 34
-                "1.21.4" -> 46
-                "1.21.8" -> 64
-                "1.21.10" -> 69
-                "1.21.11" -> 75
-                else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
-            }.toString())
+            put(
+                "pack_format", when (property("deps.minecraft")) {
+                    "1.21.1" -> 34
+                    "1.21.4" -> 46
+                    "1.21.8" -> 64
+                    "1.21.10" -> 69
+                    "1.21.11" -> 75
+                    "26.1.1" -> 84
+                    else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
+                }.toString()
+            )
             put("yacl_version", "${property("deps.yacl")}-${loader}")
         }
     }
@@ -73,7 +70,7 @@ modstitch {
     loom {
         // It's not recommended to store the Fabric Loader version in properties.
         // Make sure it's up to date.
-        fabricLoaderVersion = "0.17.3"
+        fabricLoaderVersion = "0.18.4"
 
         // Configure loom like normal in this block.
         configureLoom {
@@ -167,7 +164,11 @@ publishMods {
         return regex.find(changelogText)?.groups?.get(1)?.value?.trim()
     }
 
-    type = BETA
+    type = when {
+        "alpha" in modMetaVersion -> ALPHA
+        "beta" in modMetaVersion -> BETA
+        else -> STABLE
+    }
     changelog = getChangelogForVersion(rootProject.file("CHANGELOG.md").readText(), modMetaVersion)
 
     logger.lifecycle(changelog.toString())

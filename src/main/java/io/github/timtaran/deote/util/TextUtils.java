@@ -45,7 +45,7 @@ public class TextUtils {
 
     public static Style styleCommandText(Style style, String commandText, String shownText) {
         //? if <1.21.7 {
-        return style.withClickEvent(
+        /*return style.withClickEvent(
                         new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
                                 commandText
@@ -55,14 +55,14 @@ public class TextUtils {
                                 HoverEvent.Action.SHOW_TEXT,
                                 Component.literal(shownText))
                 );
-        //?} else {
-        /*return style.withClickEvent(
+        *///?} else {
+        return style.withClickEvent(
                         new ClickEvent.SuggestCommand(
                                 commandText
                         ))
                 .withHoverEvent(
                         new HoverEvent.ShowText(
                                 Component.literal(shownText)));
-        *///?}
+        //?}
     }
 }
