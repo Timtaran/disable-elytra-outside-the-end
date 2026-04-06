@@ -55,8 +55,8 @@ public class PreventFireworkBoostingMixin {
     {
         if (GlobalStorage.deoteConfig.workingMode == WorkingMode.FIREWORKS) {
             try {
-                if (FallFlyingPreventer.preventFallFlying(player)) {
-                    if (player.isFallFlying()) {
+                if (player.isFallFlying()) {
+                    if (FallFlyingPreventer.preventFallFlying(player)) {
                         //? if 1.21.1 {
                         /*callbackInfo.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));
                          *///?} elif >= 1.21.4 {
