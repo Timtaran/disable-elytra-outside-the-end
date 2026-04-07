@@ -10,6 +10,7 @@ import io.github.timtaran.deote.DisableElytraOutsideTheEnd;
 import io.github.timtaran.deote.commands.DeoteCommands;
 import io.github.timtaran.deote.config.DeoteConfig;
 import io.github.timtaran.deote.net.packet.ConfigSyncS2CPacket;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -59,7 +60,12 @@ public class PlatformEntrypoint implements ModInitializer {
     }
 
     public static void sendConfigSyncPacket(ServerPlayer player, DeoteConfig config) {
-        ServerPlayNetworking.send(player, new ConfigSyncS2CPacket(config));
+        if (ServerPlayNetworking.canSend(player, ConfigSyncS2CPacket.TYPE))
+            ServerPlayNetworking.send(player, new ConfigSyncS2CPacket(config));
+        else {
+            // Client haven't installed the mod, kicking if mod is required
+            kickPlayer(player, config);
+        }
     }
 
 //?} elif neoforge {
@@ -73,9 +79,7 @@ public class PlatformEntrypoint {
     @SubscribeEvent
     public static void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            try {
-                sendConfigSyncPacket(serverPlayer, DeoteConfig.getInstance());
-            } catch (UnsupportedOperationException ignored) {}
+            sendConfigSyncPacket(serverPlayer, DeoteConfig.getInstance());
         }
     }
 
@@ -99,10 +103,20 @@ public class PlatformEntrypoint {
     }
 
     public static void sendConfigSyncPacket(ServerPlayer player, DeoteConfig config) {
-        PacketDistributor.sendToPlayer(player, new ConfigSyncS2CPacket(config));
+        try {
+            PacketDistributor.sendToPlayer(player, new ConfigSyncS2CPacket(config));
+        } catch (UnsupportedOperationException ignored) {
+            // Client haven't installed the mod, kicking if mod is required
+            kickPlayer(player, config);
+        }
     }
 
 *///?}
+
+    public static void kickPlayer(ServerPlayer player, DeoteConfig config) {
+        if (config.modRequired)
+            player.connection.disconnect(Component.literal(config.modRequiredMessage));
+    }
 
     public static Dist getDist() {
         //? if fabric {
@@ -113,10 +127,10 @@ public class PlatformEntrypoint {
         //?} elif neoforge {
         /*return switch (
                 //? if <=1.21.8 {
-                FMLEnvironment.dist
-                //?} else {
-                /^FMLEnvironment.getDist()
-                ^///?}
+                /^FMLEnvironment.dist
+                ^///?} else {
+                FMLEnvironment.getDist()
+                //?}
                 ) {
             case CLIENT -> Dist.CLIENT;
             case DEDICATED_SERVER -> Dist.SERVER;

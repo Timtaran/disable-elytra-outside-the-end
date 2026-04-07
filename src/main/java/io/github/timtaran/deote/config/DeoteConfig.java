@@ -46,6 +46,8 @@ public class DeoteConfig {
     private static final boolean DEFAULT_WARNING_MESSAGE_ENABLED = true;
     private static final String DEFAULT_FLIGHT_DISABLED_MESSAGE = "§cThe atmosphere here is too dense to allow the wings to open";
     private static final String DEFAULT_FIREWORKS_DISABLED_MESSAGE = "§cIt's hard to light a fuse in flight";
+    private static final boolean DEFAULT_MOD_REQUIRED = false;
+    private static final String DEFAULT_MOD_REQUIRED_MESSAGE = "§cYou need to have the \"Disable Elytra Outside The End\" mod installed to connect to this server.";
 
     public static ConfigClassHandler<DeoteConfig> HANDLER = ConfigClassHandler.createBuilder(DeoteConfig.class)
             .id(DeoteIdentifier.get("config"))
@@ -67,12 +69,21 @@ public class DeoteConfig {
     public String flightDisabledMessage = DEFAULT_FLIGHT_DISABLED_MESSAGE;
     @SerialEntry
     public String fireworksDisabledMessage = DEFAULT_FIREWORKS_DISABLED_MESSAGE;
+    @SerialEntry
+    public boolean modRequired = DEFAULT_MOD_REQUIRED;
+    @SerialEntry
+    public String modRequiredMessage = DEFAULT_MOD_REQUIRED_MESSAGE;
 
-    public DeoteConfig(WorkingMode workingMode, boolean warningMessageEnabled, String flightDisabledMessage, String fireworksDisabledMessage) {
+    public DeoteConfig(
+            WorkingMode workingMode, boolean warningMessageEnabled, String flightDisabledMessage, String fireworksDisabledMessage,
+            boolean modRequired, String modRequiredMessage
+    ) {
         this.workingMode = workingMode;
         this.warningMessageEnabled = warningMessageEnabled;
         this.flightDisabledMessage = flightDisabledMessage;
         this.fireworksDisabledMessage = fireworksDisabledMessage;
+        this.modRequired = modRequired;
+        this.modRequiredMessage = modRequiredMessage;
     }
 
     public DeoteConfig() {
@@ -212,6 +223,29 @@ public class DeoteConfig {
                                                         TextUtils.listToString(DEFAULT_ITEM_LIST),
                                                         () -> TextUtils.listToString(this.itemList),
                                                         newVal -> this.itemList = TextUtils.stringToList(newVal)
+                                                )
+                                                .controller(StringControllerBuilder::create)
+                                                .build()
+                                )
+                                .option(
+                                        Option.<Boolean>createBuilder()
+                                                .name(TextUtils.translatable("config.groups.main.mod_required"))
+                                                .description(OptionDescription.of(TextUtils.translatable("config.groups.main.mod_required.description")))
+                                                .binding(
+                                                        DEFAULT_MOD_REQUIRED,
+                                                        () -> this.modRequired,
+                                                        newVal -> this.modRequired = newVal
+                                                )
+                                                .controller(BooleanControllerBuilder::create)
+                                                .build()
+                                )
+                                .option(
+                                        Option.<String>createBuilder()
+                                                .name(TextUtils.translatable("config.groups.main.mod_required_message"))
+                                                .binding(
+                                                        DEFAULT_MOD_REQUIRED_MESSAGE,
+                                                        () -> this.modRequiredMessage,
+                                                        newVal -> this.modRequiredMessage = newVal
                                                 )
                                                 .controller(StringControllerBuilder::create)
                                                 .build()

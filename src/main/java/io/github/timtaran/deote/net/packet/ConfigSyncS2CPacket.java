@@ -1,8 +1,6 @@
 /*
  * This file is part of Disable Elytra Outside The End.
  * Licensed under LGPL 3.0.
- *
- * Copyright (c) 2025 timtaran
  */
 package io.github.timtaran.deote.net.packet;
 

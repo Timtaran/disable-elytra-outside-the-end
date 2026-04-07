@@ -26,6 +26,8 @@ public class GlobalStorage {
                 WorkingMode.NONE,
                 false,
                 "",
+                "",
+                false,
                 ""
         );
     }
