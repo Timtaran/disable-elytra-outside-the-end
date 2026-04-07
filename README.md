@@ -7,7 +7,7 @@ The mod does what it says in the name
 - Change working dimensions via `dimensionList` parameter
 - Change allowed flight items via `itemList` parameter (with Curios compat)
 - Configurable messages when flight or firework boosting is prevented
-
+- Prevent player without this mod to join server
 
 TODO:
 - [ ] Spigot/Paper plugin (why not)
