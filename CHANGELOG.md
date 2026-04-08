@@ -1,3 +1,6 @@
+# 2.4.1
+- Added missing translation keys
+
 # v2.4.0
 - Fixed firework warning message being shown when not fall flying (#5)
 - Added option to require the mod client-side (#4)

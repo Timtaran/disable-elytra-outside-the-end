@@ -11,6 +11,9 @@
   "deote.config.groups.main.dimension.list.description": "Allowed dimensions list",
   "deote.config.groups.main.item.list": "Item list",
   "deote.config.groups.main.item.list.description": "Allowed flight items list",
+  "deote.config.groups.main.mod_required": "Mod Required",
+  "deote.config.groups.main.mod_required.description": "Whether the mod is required to be installed on client in order to connect to the server",
+  "deote.config.groups.main.mod_required_message": "Mod Required Message",
   "deote.working_mode.none": "NONE",
   "deote.working_mode.fireworks": "FIREWORKS",
   "deote.working_mode.flying": "FLYING"
